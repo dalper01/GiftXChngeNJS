@@ -1,0 +1,74 @@
+﻿<div style="min-height:100px;">
+    <h2>Create Return Request:</h2>
+</div>
+
+<div class="row form-group">
+    <div class="col-sm-3">
+        <input class="form-control" placeholder="Enter UPC or SKU" ng-model="NewUPC" />
+    </div>
+    <div class="col-sm-1">
+        <a class="btn btn-success" ng-click="findUPC()">Find by UPC</a>
+        <a class="btn btn-success" ng-click="findKeyword()">Find by Keyword</a>
+    </div>
+</div>
+
+<div style="height: 60px;"></div>
+<div>
+    <h3> {{productsLookUp.length}} of {{data.data.total}} </h3>
+</div>
+<div ng-repeat="product in productsLookUp track by $index">
+
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <span style="font-weight:800; margin-left:10px; margin-right: 10px;"> Title: </span>{{product.title}}
+            <span style="font-weight:800; margin-left:10px; margin-right: 10px;"> UPC: </span>{{product.upc}}
+            <a class="label label-warning pull-right" ng-click="AddToReturn(product)">add to return</a>
+        </div>
+        <div class="panel-body">
+            {{ product.description }} 
+        </div>
+
+    </div>
+    <div class="row text-center">
+        <div style="width: 700px; height: 175px; overflow-x: scroll; overflow-y: hidden; white-space: nowrap" >
+            <div class="thumbnail" style="max-width: 145px; height: 150px; display: inline;vertical-align: middle; border: 1px #555; margin: 2px 2px 2px 2px" 
+                 ng-repeat="pic in product.images track by $index">
+                <img src="{{pic}}" class="thumbnail" style="display: inline;max-height: 130px;  border: 1px #222" />
+            </div>
+        </div>
+    </div>
+    <!--{{$index}}-->   
+
+    
+
+</div>
+
+<div class="row" ng-show="productReturns.length > 0">
+    <table class="table table-striped" style="width: 50%" sstyle="border: 1px solid lightgray">
+        <tr>
+            <th></th>
+            <th>SKU / UPC</th>
+            <th>Description</th>
+        </tr>
+        <tr class="animate-repeat" ng-repeat="productReturn in productReturns">
+            <td>
+                <i class="glyphicon glyphicon-trash red-click" ng-click="RemoveReturn(productReturn)"></i>
+            </td>
+
+            <td sclass="col-sm-1">
+                <img src="{{ productReturn.images[0] }}" style="max-height: 50px;"/>
+            </td>
+            <td sclass="col-sm-1">
+                {{ productReturn.title }}
+            </td>
+            <td sclass="col-sm-1">
+                {{ productReturn.brand }}
+                {{ productReturn.model }}
+                {{ productReturn.upc }}  
+            </td>
+        </tr>
+
+    </table>
+
+    <a class="btn btn-primary" ng-click="SaveReturns()">Finished</a>
+</div>

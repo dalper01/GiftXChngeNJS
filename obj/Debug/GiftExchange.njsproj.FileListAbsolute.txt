@@ -1,0 +1,4 @@
+C:\NodeProjects\GiftExchange\obj\Debug\GiftExchange.njsprojResolveAssemblyReference.cache
+C:\NodeProjects\GiftExchange\bin\Microsoft.NodejsTools.WebRole.dll
+C:\NodeProjects\GiftExchangeNode\obj\Debug\GiftExchange.njsprojResolveAssemblyReference.cache
+C:\NodeProjects\GiftExchangeNode\bin\Microsoft.NodejsTools.WebRole.dll
