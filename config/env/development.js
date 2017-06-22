@@ -3,7 +3,13 @@
 var defaultEnvConfig = require('./default');
 
 module.exports = {
-  db: {
+    secure: {
+        //ssl: true,
+        ssl: false,
+        privateKey: './config/sslcerts/key.pem',
+        certificate: './config/sslcerts/cert.pem'
+    },
+    db: {
 //    uri: process.env.MONGOHQ_URL || process.env.MONGOLAB_URI || 'mongodb://' + (process.env.DB_1_PORT_27017_TCP_ADDR || 'localhost') + '/mean-dev',
         uri: 'mongodb://giftxchnge:password@ds119772.mlab.com:19772/giftexchange',
         uriProducts: 'mongodb://giftxchnge:password@ds119772.mlab.com:19772/giftexchange',
