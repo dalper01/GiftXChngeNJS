@@ -48,10 +48,10 @@
                 if (data == undefined) {
                     alert('Product Not Found');
                     return;
-                }
+                } 
                 
                 $scope.productsLookUp = data.data.items;
-                $scope.results = data.data.total;
+                $scope.total = data.data.total;
                 $scope.offset = data.data.offset;
                 console.log($scope.productsLookUp);
 

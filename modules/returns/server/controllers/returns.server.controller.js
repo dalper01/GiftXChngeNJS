@@ -100,12 +100,17 @@ var createItem = function (item) {
 var searchProviderByKeyWord = function (lookupKeyword) {
     
     var querystring = require('querystring');
-
+    //const StringDecoder = require('string_decoder');
+    //const decoder = new StringDecoder('utf8');
+    
     //var fullURL = 'https://api.upcitemdb.com/prod/trial/search?s=action%20figures&match_mode=0&type=product',
     //url = 'https://api.upcitemdb.com/prod/trial/search';
+    
+    var chunks = [];
+
     var lookupReturnData;
-    var jsonReturnData;
-    const https = require('https')
+    var jsonReturnData = '';
+    const https = require('https');
     
     var postArgs = JSON.stringify({
         "s": lookupKeyword,
@@ -140,12 +145,20 @@ var searchProviderByKeyWord = function (lookupKeyword) {
             response.on('data', function (d) {
                 // convert from uint8array format to string to object
                 //jsonReturnData = d.toString();
-                jsonReturnData = Utf8ArrayToStr(d);
-                lookupReturnData = JSON.parse(jsonReturnData);
+                //decoder.write(d);
+                //lookupReturnData += d;
+                chunks.push(d);
+                //lookupReturnData = JSON.parse(jsonReturnData);
                 console.log('BODY: ' + d);
                 
-                resolve(lookupReturnData);
-            })
+                
+            });
+
+            response.on('end', function () {
+                var returnString = Utf8ArrayToStr(Buffer.concat(chunks));
+                jsonReturnData = JSON.parse(returnString);
+                resolve(jsonReturnData);
+            });
         });
         
         upcitemdbReq.on('error', function (e) {
@@ -153,7 +166,7 @@ var searchProviderByKeyWord = function (lookupKeyword) {
             reject(e);
         })
         upcitemdbReq.write(postArgs);
-        upcitemdbReq.end()
+        upcitemdbReq.end();
     });
 }
 
