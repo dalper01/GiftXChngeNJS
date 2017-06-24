@@ -1,6 +1,6 @@
 ﻿angular.module('returns').controller('ReturnsController', ['$http', '$scope', '$stateParams', '$location', 'Authentication', 'Articles', 'searchProduct',
     function ($http, $scope, $stateParams, $location, Authentication, Articles, searchProduct) {
-        
+
         // assign to service reference
         $scope.searchResults = searchProduct.getProductSearch();
         var promise;
@@ -28,13 +28,7 @@
         
         
         $scope.AddToReturn = function (productReturn) {
-            //var index = $scope.productReturns.indexOf(productReturn);
-            //if (index > -1) {
-            //    $scope.productReturns.splice(index, 1);
-            //}
-            
             $scope.productReturns.push(productReturn);
-
         }
         
         $scope.findKeyword = function (NewUPC) {
@@ -78,6 +72,7 @@
                     alert('Product Not Found');
                     return;
                 }
+                searchProduct.setProductSearch(data.data);
                 $scope.productsLookUp = data.data.items;
                 console.log($scope.productsLookUp);
                 //$scope.productReturns.push(data);

@@ -214,10 +214,10 @@ exports.itemKeywordSearch = function (req, res) {
     
     var searchParams = {
         lookupKeyword: req.params.keyword,
-        offset: req.params.offset
+        offset: req.params.offset || 0
     }
-    //var lookupKeyword = req.params.keyword;
-    //var lookupKeyword = req.params.offset || 0;
+    
+    //exports.dbitemSearch(req, res, searchParams);
     searchProviderByKeyWord(searchParams)
     .then(function (data) {
         console.log(data);
@@ -227,7 +227,7 @@ exports.itemKeywordSearch = function (req, res) {
         console.log(err);  
     };
 
-    // write UPC to Database
+     //write UPC to Database
 
 }
 
@@ -333,7 +333,7 @@ exports.validateUPC = function (req, res) {
  * List of Returns
  */
 exports.list = function (req, res) {
-    req.params
+    //req.params
     Return.find().sort('-created').populate('user', 'displayName').exec(function (err, articles) {
         if (err) {
             return res.status(400).send({
@@ -345,9 +345,10 @@ exports.list = function (req, res) {
     });
 };
 
-exports.DBitemSearch = function (req, res) {
-    var keyword = req.body.keyword;
-    Item.find({ $text: { $search: keyword } }).sort('-created').exec(function (err, items) {
+exports.dbitemSearch = function (req, res, params) {
+    var keyword = req.body.keyword || 'marvel';
+    //Item.find({ 'title': { $regex: keyword , "$options": "i" }}).sort('-created').exec(function (err, items) {
+    Item.find({ 'title': { $regex: keyword , "$options": "i" } }).exec(function (err, items) {
         if (err) {
             return res.status(400).send({
                 message: errorHandler.getErrorMessage(err)
@@ -360,7 +361,7 @@ exports.DBitemSearch = function (req, res) {
                 total: items.length,
                 lookupKeyword: keyword
             };
-            res.json(articles);
+            res.json({ data: data });
         }
     });
 };
