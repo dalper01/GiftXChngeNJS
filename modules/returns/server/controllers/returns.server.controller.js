@@ -42,12 +42,6 @@ function Utf8ArrayToStr(array) {
     return out;
 }
 
-var uintToString = function (uintArray) {
-    var encodedString = String.fromCharCode.apply(null, uintArray),
-        decodedString = decodeURIComponent(escape(encodedString));
-    return decodedString;
-}
-
 
 var findItemByUPC = function (upc) {
         // Find Product / Item in DB
@@ -85,9 +79,7 @@ var createItem = function (item) {
         newItem.save(function (err) {
             if (err) {
                 reject(err);
-                //return res.status(400).send({
-                //    message: errorHandler.getErrorMessage(err)
-                //});
+                
                 console.log(err);
             } else {
                 resolve(true);
@@ -97,30 +89,24 @@ var createItem = function (item) {
     });
 }
 
-var searchProviderByKeyWord = function (lookupKeyword) {
+var searchProviderByKeyWord = function (searchParams) {
     
     var querystring = require('querystring');
-    //const StringDecoder = require('string_decoder');
-    //const decoder = new StringDecoder('utf8');
-    
-    //var fullURL = 'https://api.upcitemdb.com/prod/trial/search?s=action%20figures&match_mode=0&type=product',
-    //url = 'https://api.upcitemdb.com/prod/trial/search';
-    
+
     var chunks = [];
 
     var lookupReturnData;
     var jsonReturnData = '';
     const https = require('https');
-    
+
     var postArgs = JSON.stringify({
-        "s": lookupKeyword,
-        "offset": 0,
+        "s": searchParams.lookupKeyword,
+        "offset": searchParams.offset,
         "match_mode": 1
     });
 
     const opts = {
         hostname: 'api.upcitemdb.com',
-        //path: '/prod/trial/search?s=action%20figures&match_mode=0&type=product',
         path: '/prod/trial/search',
         method: 'POST',
         headers: {
@@ -131,27 +117,17 @@ var searchProviderByKeyWord = function (lookupKeyword) {
             'Content-Length': Buffer.byteLength(postArgs)
         }
     }
-    
-
         
     return new Promise(function (resolve, reject) {
-
+        
         var upcitemdbReq = https.request(opts, function (response) {
-           
             console.log('statusCode: ', response.statusCode);
             console.log('headers: ', response.headers);
             
             // success
             response.on('data', function (d) {
-                // convert from uint8array format to string to object
-                //jsonReturnData = d.toString();
-                //decoder.write(d);
-                //lookupReturnData += d;
                 chunks.push(d);
-                //lookupReturnData = JSON.parse(jsonReturnData);
                 console.log('BODY: ' + d);
-                
-                
             });
 
             response.on('end', function () {
@@ -232,52 +208,28 @@ exports.read = function (req, res) {
   res.json(req.custReturn);
 };
 
+
+// search for Products end point
 exports.itemKeywordSearch = function (req, res) {
     
-    var lookupKeyword = req.params.keyword;
-    searchProviderByKeyWord(lookupKeyword)
+    var searchParams = {
+        lookupKeyword: req.params.keyword,
+        offset: req.params.offset
+    }
+    //var lookupKeyword = req.params.keyword;
+    //var lookupKeyword = req.params.offset || 0;
+    searchProviderByKeyWord(searchParams)
     .then(function (data) {
         console.log(data);
+        data.searchTerm = searchParams.lookupKeyword;
         res.json({ 'data': data });
     }), function (err) {
         console.log(err);  
     };
-        //console.log('findItemByUPC success');
-        //console.log({ 'data': { 'items': data } });
-        
-    //    if (data.length > 0) {
-            
-            
-    //        searchProviderByUPC(opts, lookupUPC)
-    //        .then(function (data) {
-                
-                
-    //            // save new Item / Product in db
-    //            createItem(data.items[0])
-    //            .then(function (d) {
-                    
-    //                res.json({ 'data': data });
 
-
-    //            }, function (error) {
-    //                console.log(error);
-    //                res.json(error);
-    //            });
-    //        }, function (error) {
-    //            console.log(error);
-    //        });
-
-
-
-    //    }
-    //}), function (error) {
-    //    console.log('findItemByUPC error');
-    //    console.log(error);
-    //};
+    // write UPC to Database
 
 }
-
-
 
 
 exports.validateUPC = function (req, res) {
@@ -304,7 +256,6 @@ exports.validateUPC = function (req, res) {
                     "key_type": "3scale"
                 }
             }
-            
             
             searchProviderByUPC(opts, lookupUPC)
             .then(function (data) {
@@ -382,15 +333,36 @@ exports.validateUPC = function (req, res) {
  * List of Returns
  */
 exports.list = function (req, res) {
+    req.params
     Return.find().sort('-created').populate('user', 'displayName').exec(function (err, articles) {
-    if (err) {
-      return res.status(400).send({
-        message: errorHandler.getErrorMessage(err)
-      });
-    } else {
-      res.json(articles);
-    }
-  });
+        if (err) {
+            return res.status(400).send({
+                message: errorHandler.getErrorMessage(err)
+            });
+        } else {
+            res.json(articles);
+        }
+    });
+};
+
+exports.DBitemSearch = function (req, res) {
+    var keyword = req.body.keyword;
+    Item.find({ $text: { $search: keyword } }).sort('-created').exec(function (err, items) {
+        if (err) {
+            return res.status(400).send({
+                message: errorHandler.getErrorMessage(err)
+            });
+        } else {
+            var data = {
+                code: "OK",
+                items: items,
+                offeset: 0,
+                total: items.length,
+                lookupKeyword: keyword
+            };
+            res.json(articles);
+        }
+    });
 };
 
 ///**

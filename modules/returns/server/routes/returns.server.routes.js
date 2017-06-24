@@ -20,6 +20,8 @@ module.exports = function (app) {
     .get(returns.validateUPC);
     app.route('/api/keywordsearch/:keyword')
     .get(returns.itemKeywordSearch);
+    app.route('/api/bditemsearch:keyword/')
+    .get(returns.DBitemSearch);
 
     
     //app.route('/api/searchproduct/:keyword')

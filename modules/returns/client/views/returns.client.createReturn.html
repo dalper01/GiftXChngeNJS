@@ -7,16 +7,16 @@
         <input class="form-control" placeholder="Enter UPC or SKU" ng-model="NewUPC" />
     </div>
     <div class="col-sm-1">
-        <a class="btn btn-success" ng-click="findUPC()">Find by UPC</a>
-        <a class="btn btn-success" ng-click="findKeyword()">Find by Keyword</a>
+        <a class="btn btn-success" ng-click="findUPC(NewUPC)">Find by UPC</a>
+        <a class="btn btn-success" ng-click="findKeyword(NewUPC)">Find by Keyword</a>
     </div>
 </div>
 
 <div style="height: 60px;"></div>
 <div>
-    <h3>{{productsLookUp.length - 4}} - {{productsLookUp.length}} of {{productsLookUp.total}}  results for </h3>
+    <h3>{{searchResults.offset + 1}} - {{searchResults.offset + searchResults.items.length}} of {{searchResults.total}}  results for {{searchResults.lookupKeyword}}</h3>
 </div>
-<div ng-repeat="product in productsLookUp track by $index">
+<div ng-repeat="product in searchResults.items track by $index">
 
     <div class="panel panel-primary">
         <div class="panel-heading">

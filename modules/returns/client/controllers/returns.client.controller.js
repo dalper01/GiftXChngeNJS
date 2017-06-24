@@ -1,10 +1,13 @@
-﻿angular.module('returns').controller('ReturnsController', ['$http', '$scope', '$stateParams', '$location', 'Authentication', 'Articles',
-    function ($http, $scope, $stateParams, $location, Authentication, Articles) {
+﻿angular.module('returns').controller('ReturnsController', ['$http', '$scope', '$stateParams', '$location', 'Authentication', 'Articles', 'searchProduct',
+    function ($http, $scope, $stateParams, $location, Authentication, Articles, searchProduct) {
         
+        // assign to service reference
+        $scope.searchResults = searchProduct.getProductSearch();
+        var promise;
         $scope.authentication = Authentication;
         
         $scope.NewUPC = '';
-        $scope.productReturns = [];
+        //$scope.productReturns = [];
         
         $scope.confirmationPage = false;
         
@@ -34,32 +37,29 @@
 
         }
         
-        $scope.findKeyword = function () {
+        $scope.findKeyword = function (NewUPC) {
             if (!$scope.checkInput())
                 return
             
-            $http({
-                url: '/api/keywordsearch/' + encodeURIComponent($scope.NewUPC),
-                method: "GET"
-                //params: { keyword: $scope.NewUPC }
-            }).success(function (data, status, headers, config) {
+            
+            promise = searchProduct.findKeyword(NewUPC);
+            promise.then(function (data) {
+                //if (data == undefined) {
+                //    alert('Product Not Found');
+                //    return;
+                //}
+                //$scope.productsLookUp = data.data.items;
+                //$scope.total = data.data.total;
+                //$scope.offset = data.data.offset;
+                console.log('returned data:');
                 console.log(data);
-                //if (data.UPC == undefined || data.UPC.length == 0 || data.description == undefined || data.description.length == 0) {
-                if (data == undefined) {
-                    alert('Product Not Found');
-                    return;
-                } 
+                console.log('$scope.searchResults');
+                console.log($scope.searchResults);
                 
-                $scope.productsLookUp = data.data.items;
-                $scope.total = data.data.total;
-                $scope.offset = data.data.offset;
-                console.log($scope.productsLookUp);
-
-            }).error(function (data, status, headers, config) {
-                alert(status);
-                console.log(status);
+            }, function (error) {
+                alert(error);
+                console.log(error);
             });
-
         }
         
         
