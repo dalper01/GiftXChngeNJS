@@ -1,0 +1,26 @@
+﻿<table class="table table-striped" nostyle="width: 50%" sstyle="border: 1px solid lightgray">
+    <tr>
+        <th></th>
+        <th></th>
+        <th>Title</th>
+        <th> Brand / SKU / UPC </th>
+    </tr>
+    <tr class="animate-repeat" ng-repeat="productReturn in customerReturns.returnItems track by $index">
+        <td>
+            <i class="glyphicon glyphicon-trash red-click" ng-click="RemoveReturn(productReturn, customerReturns.returnItems)"></i>
+        </td>
+
+        <td sclass="col-sm-1">
+            <img src="{{ productReturn.images[0] }}" style="max-height: 50px;" />
+        </td>
+        <td sclass="col-sm-1">
+            {{ productReturn.title }}
+        </td>
+        <td sclass="col-sm-1">
+            {{ productReturn.brand }}
+            {{ productReturn.model }}
+            {{ productReturn.upc }}
+        </td>
+    </tr>
+
+</table>

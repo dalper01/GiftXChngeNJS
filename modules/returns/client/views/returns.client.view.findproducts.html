@@ -1,0 +1,79 @@
+﻿<div class="row" style="height: 50px">
+
+</div>
+<div class="row" style="height: 50px">
+<a ui-sref="newreturn"> <-- Back to Returns </a>
+</div>
+
+<!--style="height:100%; overflow: scroll;"-->
+<div class="col-sm-8" style="border: 1px solid #ddd ; border-radius: 4px 4px 0 0; padding: 30px; min-height:200px; max-height:800px; overflow-y: scroll;">
+    <div class="row" style="margin-bottom:15px;">
+        <div class="btn-grp">
+            <label class="radio-inline">
+                <input type="radio" ng-model="searchType" id="inlineRadio1" value="UPC" checked="checked" > Search by UPC
+            </label>
+            <label class="radio-inline">
+                <input type="radio" ng-model="searchType" id="inlineRadio2" value="Keyword"> Search by Keywords
+            </label>
+        </div>
+    </div>
+
+    <div class="row form-group" ng-show="searchType=='UPC'">
+        <div class="col-sm-3">
+            <input class="form-control" placeholder="Enter UPC or SKU" ng-model="NewUPC" />
+        </div>
+        <div class="col-sm-1">
+            <a class="btn btn-success" ng-click="findUPC(NewUPC)">Find</a>
+        </div>
+    </div>
+
+
+    <div class="row form-group" ng-show="searchType=='Keyword'">
+        <div class="col-sm-3">
+            <input class="form-control" placeholder="Enter Keywords" ng-model="Keywords" />
+        </div>
+        <div class="col-sm-1">
+            <a class="btn btn-success" ng-click="findKeyword(Keywords)">Find</a>
+        </div>
+    </div>
+
+
+
+
+    <div style="height: 60px;"></div>
+    <div ng-show="searchResults.items!=null && searchResults.items!=undefined">
+        <div>
+            <h3>{{searchResults.offset + 1}} - {{searchResults.offset + searchResults.items.length}} of {{searchResults.total}}  results for {{searchResults.searchTerm}}</h3>
+        </div>
+    </div>
+
+    <!--show ReturnList as it's created-->
+    <div ng-repeat="product in searchResults.items track by $index" >
+
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <span style="font-weight:800; margin-left:10px; margin-right: 10px;"> Title: </span>{{product.title}}
+                <span style="font-weight:800; margin-left:10px; margin-right: 10px;"> UPC: </span>{{product.upc}}
+                <a class="label label-warning pull-right" ng-click="AddToReturn(product)">add to return</a>
+            </div>
+            <div class="panel-body">
+                {{ product.description }}
+            </div>
+
+        </div>
+        <div class="row text-center">
+            <div style="width: 700px; height: 175px; overflow-x: scroll; overflow-y: hidden; white-space: nowrap">
+                <div class="thumbnail" style="max-width: 145px; height: 150px; display: inline;vertical-align: middle; border: 1px #555; margin: 2px 2px 2px 2px"
+                     ng-repeat="pic in product.images track by $index">
+                    <img src="{{pic}}" class="thumbnail" style="display: inline;max-height: 130px;  border: 1px #222" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="col-sm-4" ng-show="customerReturns.returnItems.length > 0" >
+    <customer-return></customer-return>
+    <a class="btn btn-primary pull-right" ng-show="searchResults.items.length > 0" ui-sref="newreturn"> Go to Checkout </a>
+</div>
+
