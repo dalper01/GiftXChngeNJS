@@ -1,4 +1,5 @@
 'use strict';
+require('./returns.server.model');
 
 /**
  * Module dependencies.
@@ -14,7 +15,7 @@ var ReturnSchema = new Schema({
     type: Date,
     default: Date.now
     },
-    items: [{
+    returnItems: [{
             UPC: String,
             title: String
         }],
