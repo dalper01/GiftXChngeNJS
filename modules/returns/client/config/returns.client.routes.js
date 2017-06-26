@@ -11,6 +11,14 @@ angular.module('returns').config(['$stateProvider',
             data: {
                 //roles: ['user', 'admin']
             }
-        });
+        })
+      .state('productsearch', {
+        url: '/productsearch',
+        templateUrl: 'modules/returns/client/views/returns.client.view.findproducts.html',
+        controller: 'ReturnsController',
+        data: {
+                //roles: ['user', 'admin']
+        }
+    });
     }
 ]);
