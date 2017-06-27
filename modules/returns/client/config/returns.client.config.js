@@ -18,10 +18,10 @@ function (Menus) {
   });
 
   // Add the dropdown create item
-  Menus.addSubMenuItem('topbar', 'articles', {
-    title: 'Create Articles',
-    state: 'articles.create',
-    roles: ['user']
-  });
+  //Menus.addSubMenuItem('topbar', 'articles', {
+  //  title: 'Create Articles',
+  //  state: 'articles.create',
+  //  roles: ['user']
+  //});
 }
 ]);
