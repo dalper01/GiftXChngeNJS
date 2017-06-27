@@ -1,14 +1,14 @@
-﻿angular.module('returns').controller('ReturnsController', ['$http', '$scope', '$stateParams', '$location', 'Authentication', 'customerReturnService', 'searchProduct',
-    function ($http, $scope, $stateParams, $location, Authentication, custRtrnSrvc, searchProduct) {
+﻿angular.module('returns').controller('ReturnsController', ['$http', '$scope', '$state', '$stateParams', '$location', 'Authentication', 'customerReturnService', 'searchProductService',
+    function ($http, $scope, $state, $stateParams, $location, Authentication, customerReturnService, searchProductService) {
         $scope.user = Authentication.user;
-        console.log($scope.user);
-        console.log($scope.user.displayName);
+        //console.log($scope.user);
+        //console.log($scope.user.displayName);
         // bind return service to be used from markup
         //$scope.customerReturnService = customerReturnService;
 
         // assign to service reference
-        $scope.customerReturns = custRtrnSrvc.getCustomerReturns();
-        $scope.searchResults = searchProduct.getProductSearch();
+        $scope.customerReturns = customerReturnService.getCustomerReturns();
+        $scope.searchResults = searchProductService.getProductSearch();
         $scope.searchType = 'UPC';
         var promise;
         $scope.authentication = Authentication;
@@ -37,7 +37,7 @@
         
         $scope.AddToReturn = function (productReturn) {
             //$scope.productReturns.push(productReturn);
-            custRtrnSrvc.addReturnItem(productReturn);
+            customerReturnService.addReturnItem(productReturn);
             console.log($scope.customerReturns);
         }
         
@@ -46,7 +46,7 @@
                 return
             
             
-            promise = searchProduct.findKeyword(keyword);
+            promise = searchProductService.findKeyword(keyword);
             promise.then(function (data) {
                 console.log('returned data:');
                 console.log(data);
@@ -75,11 +75,9 @@
                     alert('Product Not Found');
                     return;
                 }
-                searchProduct.setProductSearch(data.data);
+                searchProductService.setProductSearch(data.data);
                 $scope.productsLookUp = data.data.items;
                 console.log($scope.productsLookUp);
-                //$scope.productReturns.push(data);
-                //$scope.NewUPC = '';
 
             }).error(function (data, status, headers, config) {
                 alert(status);
@@ -98,22 +96,21 @@
             if ($scope.user.displayName == null || $scope.user.displayName == undefined)
                 alert('Login / Register to complete return')
             $http({
-                url: '/MyExchange/SaveReturns',
+                url: '/api/returns',
                 method: "POST",
-                data: $scope.productReturns, //this is your json data string
+                data: $scope.customerReturns,
                 headers: {
                     'Content-type': 'application/json'
                 },
-            //responseType: 'arraybuffer'
             }).success(function (data, status, headers, config) {
-                //var blob = new Blob([data], { type: "application/pdf" });
-                //saveAs(blob, 'Resume.pdf');
                 console.log(data);
-                $scope.Return = data;
-                $scope.confirmationPage = true;
+                customerReturnService.clearCustomerReturns();
+                $state.go('confirmreturn', { confirmReturn: data });
+                //$scope.Return = data;
+                //$scope.confirmationPage = true;
 
             }).error(function (data, status, headers, config) {
-            //upload failed
+                //upload failed
             });
 
         }

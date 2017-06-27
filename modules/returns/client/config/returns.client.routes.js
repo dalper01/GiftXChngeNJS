@@ -19,6 +19,17 @@ angular.module('returns').config(['$stateProvider',
         data: {
                 //roles: ['user', 'admin']
         }
-    });
+        })
+    .state('confirmreturn', {
+            url: '/confirmreturn',
+            params: {
+                confirmReturn: null
+            },            
+            templateUrl: 'modules/returns/client/views/returns.client.confirmReturnView.html',
+            controller: 'confirmController',
+            data: {
+                //roles: ['user', 'admin']
+            }
+        });
     }
 ]);

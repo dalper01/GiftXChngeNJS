@@ -11,21 +11,24 @@ angular.module('returns').factory('customerReturnService', ['$resource', '$http'
             uriSearchProvideUPC: ''
         };
         
-        // product search response repo        
+        var customerReturnService = {};
+        
+        // initialize product search response repo        
         var _customerReturn = {
             returnItems: []
         };
         
+        customerReturnService.getCustomerReturns = function () {
+            return _customerReturn;
+        }
         
-        // service object with data setters and getters
-        var customerReturnService = {
-            getCustomerReturns: function () {
-                return _customerReturn;
-            },
-            setCustomerReturns: function (data) {
-                angular.copy(data, _customerReturn);
-            }
-        };
+        customerReturnService.setCustomerReturns = function (data) {
+            angular.copy(data, _customerReturn);
+        }
+        
+        customerReturnService.clearCustomerReturns = function () {
+            customerReturnService.setCustomerReturns({ returnItems: [] });
+        }
         
         customerReturnService.addReturnItem = function (item) {
             _customerReturn.returnItems.push(item);
@@ -35,9 +38,7 @@ angular.module('returns').factory('customerReturnService', ['$resource', '$http'
             _customerReturn.returnItems.push(item);
         }
         
-        
-        
-        // Search for product-items by keyword descriptions and filters        
+        // Search for product-items by keyword descriptions and filters
         customerReturnService.findKeyword = function (NewUPC) {
             var deferred = $q.defer();
             
@@ -57,6 +58,10 @@ angular.module('returns').factory('customerReturnService', ['$resource', '$http'
             
             return deferred.promise;
         }
+
+        
+        
+        
         
         return customerReturnService;
 

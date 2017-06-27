@@ -14,7 +14,6 @@ module.exports = function (app) {
     //    return { }
     //})
     .post(returns.create);
-//  //  .post(returns.create);
 
     app.route('/api/validupc/:upc')
     .get(returns.validateUPC);

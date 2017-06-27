@@ -1,11 +1,12 @@
 'use strict';
-require('./returns.server.model');
 
 /**
  * Module dependencies.
  */
 var mongoose = require('mongoose'),
-  Schema = mongoose.Schema;
+    Schema = mongoose.Schema;
+
+var ItemModel = require('./returns.server.model.items.js');
 
 /**
  * Return Schema
@@ -15,22 +16,11 @@ var ReturnSchema = new Schema({
     type: Date,
     default: Date.now
     },
-    returnItems: [{
-            UPC: String,
-            title: String
-        }],
-    //UPC: {
-    //    type: String,
-    //    default: '',
-    //    trim: true,
-    //    required: 'UPC cannot be blank'
-    //},
-    //title: {
-    //    type: String,
-    //    default: '',
-    //    trim: true,
-    //    required: 'Title cannot be blank'
-    //},
+    returnItems: [ItemModel], 
+    //returnItems: [{
+    //        type: Schema.ObjectId,
+    //        ref: 'Item'
+    //    }],
   user: {
     type: Schema.ObjectId,
     ref: 'User'

@@ -1,7 +1,7 @@
 ﻿'use strict';
 
 //Product service used for communicating with the articles REST endpoints
-angular.module('returns').factory('searchProduct', ['$resource', '$http', '$q',
+angular.module('returns').factory('searchProductService', ['$resource', '$http', '$q',
     function ($resource, $http, $q) {
         
         // url's for http call -- should be centralized
