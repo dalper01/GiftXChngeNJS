@@ -334,15 +334,38 @@ exports.validateUPC = function (req, res) {
  */
 exports.list = function (req, res) {
     //req.params
-    Return.find().sort('-created').populate('user', 'displayName').exec(function (err, articles) {
+    console.log(req.user);
+    var userId = req.user["_id"];
+    console.log("req.user._id");
+    console.log(userId);
+    //var query = {}
+
+    Return.find({ user: userId }).sort('-created').populate('user', 'displayName').exec(function (err, returns) {
         if (err) {
             return res.status(400).send({
                 message: errorHandler.getErrorMessage(err)
             });
         } else {
-            res.json(articles);
+            console.log('number of returns: ' + returns.length)
+            res.json(returns);
         }
     });
+};
+
+
+exports.listForUser = function (req, res) {
+
+    console.log(req.user);
+    //var req.params
+    //Return.find().sort('-created').populate('user', 'displayName').exec(function (err, articles) {
+    //    if (err) {
+    //        return res.status(400).send({
+    //            message: errorHandler.getErrorMessage(err)
+    //        });
+    //    } else {
+    //        res.json(articles);
+    //    }
+    //});
 };
 
 exports.dbitemSearch = function (req, res, params) {

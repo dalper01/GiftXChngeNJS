@@ -7,9 +7,14 @@
   var returns = require('../controllers/returns.server.controller');
 
 module.exports = function (app) {
-  //// Returns collection routes
+    
+    //// Returns collection routes
     app.route('/api/returns')//.all(articlesPolicy.isAllowed)
     .get(returns.list)
+    .post(returns.create);
+
+    app.route('/api/returns/user/:userId')//.all(articlesPolicy.isAllowed)
+    .get(returns.listForUser)
     //.get(function () { 
     //    return { }
     //})
@@ -19,8 +24,8 @@ module.exports = function (app) {
     .get(returns.validateUPC);
     app.route('/api/keywordsearch/:keyword')
     .get(returns.itemKeywordSearch);
-    app.route('/api/bditemsearch/:keyword')
-    .get(returns.dbitemSearch);
+    //app.route('/api/bditemsearch/:keyword')
+    //.get(returns.dbitemSearch);
 
     
     //app.route('/api/searchproduct/:keyword')

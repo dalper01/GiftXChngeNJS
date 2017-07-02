@@ -23,7 +23,7 @@
             <input class="form-control" placeholder="Enter UPC or SKU" ng-model="NewUPC" />
         </div>
         <div class="col-sm-1">
-            <a class="btn btn-success" ng-click="findUPC(NewUPC)">Find</a>
+            <a class="btn btn-success" ng-click="alert('findUPC clicked');findUPC(NewUPC)">Find</a>
         </div>
     </div>
 
@@ -72,7 +72,7 @@
     </div>
 
 </div>
-<div class="col-sm-4" ng-show="customerReturns.returnItems.length > 0" >
+<div class="col-sm-4" ng-show="newReturnHasItems()" >
     <customer-return></customer-return>
     <a class="btn btn-primary pull-right" ng-show="searchResults.items.length > 0" ui-sref="newreturn"> Go to Checkout </a>
 </div>

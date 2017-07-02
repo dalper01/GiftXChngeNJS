@@ -1,5 +1,5 @@
-﻿angular.module('returns').controller('confirmController', ['$scope', '$state',
-    function ($scope, $state) {
+﻿angular.module('returns').controller('confirmController', ['$scope', '$state', 'customerReturnService', 
+    function ($scope, $state, customerReturnService) {
         
         $scope.confirmReturn = $state.params.confirmReturn;
         //console.log('$state.params');

@@ -2,13 +2,13 @@
     <div class="row" style="height:100px"></div>
 <div class="row">
     <div class="col-sm-12">
-        <div class="panel panel-primary" ng-if="customerReturns!=undefined && customerReturns!=null">
+        <div class="panel panel-primary" not-ng-if="newCustomerReturn!=undefined && newCustomerReturn!=null">
             <div class="panel-heading">
                 <span style="font-size: 24px">Create Return Request:</span>
             </div>
             <div class="panel-body" style="min-height: 500px;">
 
-                <div class="cont" ng-hide="customerReturns.returnItems == undefined || customerReturns.returnItems == null || customerReturns.returnItems.length == 0">
+                <div class="cont" ng-hide="newCustomerReturn.returnItems == undefined || newCustomerReturn.returnItems == null || newCustomerReturn.returnItems.length == 0">
                     <div class="col-sm-11">
                         <!-- Directive to display Customer Return Items -->
                         <customer-return></customer-return>
@@ -22,7 +22,7 @@
 
 
 
-                <div class="row" ng-hide="customerReturns.returnItems.length > 0">
+                <div class="row" ng-hide="newReturnHasItems()">
 
                     <div class="bs-callout bs-callout-info"
                          style="margin-top:0px; padding: 20px;">
@@ -55,10 +55,10 @@
 
             </div>
             <div class="panel-footer">
-                <div ng-show="customerReturns.returnItems.length > 0">
+                <div ng-show="newReturnHasItems()">
                     <a class="btn btn-primary" ng-click="SaveReturns()">Save Return</a>
                 </div>
-                <div ng-hide="customerReturns.returnItems.length > 0">
+                <div ng-hide="newReturnHasItems()">
                     <a class="btn btn-success" ui-sref="productsearch">Add Product</a>
                 </div>
             </div>

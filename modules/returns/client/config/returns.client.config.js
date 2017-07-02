@@ -6,13 +6,13 @@ function (Menus) {
   // Add the articles dropdown item
   Menus.addMenuItem('topbar', {
     title: 'Returns',
-    //state: 'articles',
-    //type: 'dropdown',
+    state: 'returns',
+    type: 'dropdown',
     roles: ['user']
   });
 
   // Add the dropdown list item
-  Menus.addSubMenuItem('topbar', 'articles', {
+  Menus.addSubMenuItem('topbar', 'returns', {
     title: 'My Returns',
     state: 'myreturns'
   });

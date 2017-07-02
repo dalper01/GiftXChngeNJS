@@ -5,7 +5,7 @@
         <th>Title</th>
         <th> Brand / SKU / UPC </th>
     </tr>
-    <tr class="animate-repeat" ng-repeat="productReturn in customerReturns.returnItems track by $index">
+    <tr class="animate-repeat" ng-repeat="productReturn in newCustomerReturn.returnItems track by $index">
         <td>
             <i class="glyphicon glyphicon-trash red-click" ng-click="RemoveReturn(productReturn, customerReturns.returnItems)"></i>
         </td>

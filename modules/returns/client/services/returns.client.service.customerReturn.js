@@ -6,44 +6,45 @@ angular.module('returns').factory('customerReturnService', ['$resource', '$http'
         
         // url's for http call -- should be centralized
         var constants = {
-            uriSearchKeyword: '/api/keywordsearch/',
-            uriSearchKeywordTest: '/api/bditemsearch/',
-            uriSearchProvideUPC: ''
+            //uriSearchKeyword: '/api/keywordsearch/',
+            //uriSearchKeywordTest: '/api/bditemsearch/',
+            //uriSearchProvideUPC: ''
+            uriReturns: '/api/returns'
         };
         
         var customerReturnService = {};
         
         // initialize product search response repo        
-        var _customerReturn = {
+        var _newCustomerReturn = {
             returnItems: []
         };
         
-        customerReturnService.getCustomerReturns = function () {
-            return _customerReturn;
+        customerReturnService.getNewCustomerReturn = function () {
+            return _newCustomerReturn;
         }
         
-        customerReturnService.setCustomerReturns = function (data) {
-            angular.copy(data, _customerReturn);
+        customerReturnService.setNewCustomerReturn = function (data) {
+            angular.copy(data, _newCustomerReturn);
         }
         
-        customerReturnService.clearCustomerReturns = function () {
-            customerReturnService.setCustomerReturns({ returnItems: [] });
+        customerReturnService.clearNewCustomerReturn = function () {
+            customerReturnService.setNewCustomerReturn({ returnItems: [] });
         }
         
         customerReturnService.addReturnItem = function (item) {
-            _customerReturn.returnItems.push(item);
+            _newCustomerReturn.returnItems.push(item);
         }
         
         customerReturnService.removeReturnItem = function (item) {
-            _customerReturn.returnItems.push(item);
+            _newCustomerReturn.returnItems.push(item);
         }
         
         // Search for product-items by keyword descriptions and filters
-        customerReturnService.findKeyword = function (NewUPC) {
+        customerReturnService.getReturns = function () {
             var deferred = $q.defer();
             
             $http({
-                url: constants.uriSearchKeyword + encodeURIComponent(NewUPC),
+                url: constants.uriReturns,
                 method: "GET"
                 //params: { keyword: $scope.NewUPC }
             })

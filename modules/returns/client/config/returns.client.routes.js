@@ -7,7 +7,7 @@ angular.module('returns').config(['$stateProvider',
         .state('newreturn', {
             url: '/newreturn',
             templateUrl: 'modules/returns/client/views/returns.client.createReturn.html',
-            controller: 'ReturnsController',
+            controller: 'NewReturnsController',
             data: {
                 //roles: ['user', 'admin']
             }
@@ -15,7 +15,7 @@ angular.module('returns').config(['$stateProvider',
         .state('productsearch', {
             url: '/productsearch',
             templateUrl: 'modules/returns/client/views/returns.client.view.findproducts.html',
-            controller: 'ReturnsController',
+            controller: 'NewReturnsController',
             data: {
                 //roles: ['user', 'admin']
             }
@@ -44,8 +44,8 @@ angular.module('returns').config(['$stateProvider',
             params: {
                 confirmReturn: null
             },            
-            templateUrl: 'modules/returns/client/views/returns.client.confirmReturnView.html',
-            controller: 'confirmController',
+            templateUrl: 'modules/returns/client/views/returns.client.myReturnsView.html',
+            controller: 'MyReturnsController',
             data: {
                 roles: ['user']
             }

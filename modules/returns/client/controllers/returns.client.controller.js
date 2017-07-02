@@ -1,13 +1,13 @@
-﻿angular.module('returns').controller('ReturnsController', ['$http', '$scope', '$state', '$stateParams', '$location', 'Authentication', 'customerReturnService', 'searchProductService',
+﻿angular.module('returns').controller('NewReturnsController', ['$http', '$scope', '$state', '$stateParams', '$location', 'Authentication', 'customerReturnService', 'searchProductService',
     function ($http, $scope, $state, $stateParams, $location, Authentication, customerReturnService, searchProductService) {
         $scope.user = Authentication.user;
         //console.log($scope.user);
         //console.log($scope.user.displayName);
         // bind return service to be used from markup
-        //$scope.customerReturnService = customerReturnService;
+        //$scope.newCustomerReturnservice = customerReturnService;
 
         // assign to service reference
-        $scope.customerReturns = customerReturnService.getCustomerReturns();
+        $scope.newCustomerReturn = customerReturnService.getNewCustomerReturn();
         $scope.searchResults = searchProductService.getProductSearch();
         $scope.searchType = 'UPC';
         var promise;
@@ -27,6 +27,10 @@
             return 1;
         }
         
+        $scope.newReturnHasItems = function() {
+            return $scope.newCustomerReturn.returnItems.length > 0;
+        }
+
         $scope.RemoveReturn = function (productReturn, allReturns) {
             var index = allReturns.indexOf(productReturn);
             if (index > -1) {
@@ -38,7 +42,7 @@
         $scope.AddToReturn = function (productReturn) {
             //$scope.productReturns.push(productReturn);
             customerReturnService.addReturnItem(productReturn);
-            console.log($scope.customerReturns);
+            console.log($scope.newCustomerReturn);
         }
         
         $scope.findKeyword = function (keyword) {
@@ -90,21 +94,23 @@
         
         $scope.SaveReturns = function () {
             console.log('customerReturns');
-            console.log($scope.customerReturns);
+            console.log($scope.newCustomerReturn);
             
             // if user not logged in, prompt for login
-            if ($scope.user.displayName == null || $scope.user.displayName == undefined)
-                alert('Login / Register to complete return')
+            if ($scope.user.displayName == null || $scope.user.displayName == undefined) {
+                alert('Login / Register to complete return');
+                return;
+            }
             $http({
                 url: '/api/returns',
                 method: "POST",
-                data: $scope.customerReturns,
+                data: $scope.newCustomerReturn,
                 headers: {
                     'Content-type': 'application/json'
                 },
             }).success(function (data, status, headers, config) {
                 console.log(data);
-                customerReturnService.clearCustomerReturns();
+                customerReturnService.clearNewCustomerReturn();
                 $state.go('confirmreturn', { confirmReturn: data });
                 //$scope.Return = data;
                 //$scope.confirmationPage = true;
