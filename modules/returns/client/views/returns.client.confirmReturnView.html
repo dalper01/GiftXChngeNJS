@@ -1,0 +1,31 @@
+﻿<div class="row" style="height: 70px"></div>
+<div class="row" style="height: 130px; vertical-align: middle" vcenter>
+    <div class="alert alert-success" role="alert">Your Return Request has been created</div>
+</div>
+<!--<div class="row">
+    Created: {{createDate }}
+</div>-->
+<div class="row">
+    <table class="table table-striped" nostyle="width: 50%" sstyle="border: 1px solid lightgray">
+        <tr>
+            <th></th>
+            <th>Title</th>
+            <th>Brand / SKU / UPC </th>
+        </tr>
+        <tr class="animate-repeat" ng-repeat="productReturn in confirmReturn.returnItems track by $index">
+            <td sclass="col-sm-1">
+                <img src="{{ productReturn.images[0] }}" style="max-height: 130px;" />
+            </td>
+            <td sclass="col-sm-1">
+                {{ productReturn.title }}
+            </td>
+            <td sclass="col-sm-1">
+                {{ productReturn.brand }}
+                {{ productReturn.model }}
+                {{ productReturn.upc }}
+            </td>
+        </tr>
+
+    </table>
+</div>
+
