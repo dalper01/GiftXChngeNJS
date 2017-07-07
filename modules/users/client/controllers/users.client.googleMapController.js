@@ -8,9 +8,9 @@ angular.module('users').controller('googleMapController', ['$scope', '$http',
         
         
         
-        var geoLocationAPIUrl = 'http://freegeoip.net/json/';
-        //var geoLocationAPIUrl = 'http://www.geoplugin.net/json.gp'; // need account
-        //var geoLocationAPIUrl = 'http://ipinfo.io/json'; // need to use API
+        var geoLocationAPIUrl = 'https://freegeoip.net/json/';
+        //var geoLocationAPIUrl = 'https://www.geoplugin.net/json.gp'; // need account
+        //var geoLocationAPIUrl = 'https://ipinfo.io/json'; // need to use API
         var LatLng;
         var locationData;
         var local;
