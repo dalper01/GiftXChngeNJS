@@ -1,3 +1,51 @@
+html,body {height:100%;}
+
+.scrollbar
+{
+	margin-left: 30px;
+	float: left;
+	height: 300px;
+	width: 65px;
+	background: #F5F5F5;
+	overflow-y: scroll;
+	margin-bottom: 25px;
+}
+
+.force-overflow
+{
+	min-height: 450px;
+}
+#right-panel ul::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	background-color: #F5F5F5;
+}
+
+#right-panel ul::-webkit-scrollbar
+{
+	width: 10px;
+	background-color: #F5F5F5;
+}
+
+#right-panel ul::-webkit-scrollbar-thumb
+{
+	background-color: #000000;
+	border: 2px solid #555555;
+}
+
+
+.search-icon {
+    max-height:20px;
+    max-width: 20px;
+}
+#style-1::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    background-color: #F5F5F5;
+}
+
+.addressfont {
+    color: #ddd
+}
 .content {
   margin-top: 50px;
 }
@@ -11,6 +59,13 @@
 .x-ng-cloak {
   display: none !important;
 }
+
+.header {
+    font-weight: 700;
+    font-family: sans-serif;
+    color: #666
+}
+
 .header-profile-image {
   opacity: 0.8;
   height: 28px;
@@ -34,4 +89,81 @@ a:hover .header-profile-image {
 }
 .has-error .help-inline.error-text {
   display: inline;
+}
+
+
+/*Maps*/
+#right-panel {
+    font-family: 'Roboto','sans-serif';
+    /*line-height: 30px;*/
+
+}
+
+#right-panel select, #right-panel input {
+    font-size: 15px;
+}
+
+#right-panel select {
+    width: 100%;
+}
+
+#right-panel i {
+    font-size: 12px;
+}
+#right-panel {
+    resize: both;
+    opacity: .9;
+    font-family: Arial, Helvetica, sans-serif;
+    position: absolute;
+    right: 5px;
+    /*top: 60%;*/
+    /*margin-top: -195px;*/
+    height: 90%;
+    /*height: 330px;*/
+    width: 250px;
+    padding: 0px;
+    z-index: 5;
+    border: 1px solid #999;
+    background: #fff;
+    overflow-y: hidden;
+    overflow-x: hidden;
+
+}
+
+.right-panel ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    /*height: 271px;*/
+    height: 95%;
+    width: 250px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+.right-panel li {
+    font-family: Roboto, Arial, sans-serif;
+    font-size: 13px;
+    padding: 10px 10px 10px;
+    background-color: #fff;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    border-bottom: 1px solid #ccc;
+}
+
+.section-pagination-container {
+    margin-right: 10px;
+    margin-top:7px;
+    vertical-align: bottom;
+    font-family: Roboto, Arial, sans-serif;
+    color: #8c8c8c;
+    font-size: 12px;
+    line-height: 18px;
+}
+.section-pagination-button {
+    cursor: pointer;
+    margin-left: 14px;
+    padding-left: 4px;
+    padding-right: 4px;
+    text-decoration: none;
 }

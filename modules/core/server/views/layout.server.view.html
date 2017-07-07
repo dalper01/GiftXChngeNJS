@@ -41,11 +41,13 @@
 <body class="ng-cloak">
   <header ng-include="'/modules/core/client/views/header.client.view.html'" class="navbar navbar-fixed-top navbar-inverse"></header>
   <section class="content">
-    <section class="container">
+    <section class="container" style="height:100%">
       {% block content %}{% endblock %}
     </section>
   </section>
 
+    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyBcv4EatSwWit7jS5IR3W0k8DWAaC2UcKc"></script>
+    <!--<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places"></script>-->
   <!--Embedding The User Object-->
   <script type="text/javascript">
     var user = {{ user | json | safe }};
@@ -59,7 +61,7 @@
 
   {% if livereload %}
   <!--Livereload script rendered -->
-  <script type="text/javascript" src="{{host}}:35729/livereload.js"></script>
+  <!--<script type="text/javascript" src="{{host}}:35729/livereload.js"></script>-->
   {% endif %}
 </body>
 

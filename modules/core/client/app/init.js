@@ -1,5 +1,5 @@
 'use strict';
-
+//var jQuery = require('jquery');
 //Start by defining the main module and adding the module dependencies
 angular.module(ApplicationConfiguration.applicationModuleName, ApplicationConfiguration.applicationModuleVendorDependencies);
 
@@ -78,3 +78,24 @@ angular.element(document).ready(function () {
   //Then init the app
   angular.bootstrap(document, [ApplicationConfiguration.applicationModuleName]);
 });
+
+//angular.module(ApplicationConfiguration.applicationModuleName).animation('.slide', [function ($window) {
+//        return {
+//            // make note that other events (like addClass/removeClass)
+//            // have different function input parameters
+//            enter: function (element, doneFn) {
+//                jQuery(element).fadeIn(1000, doneFn);
+
+//      // remember to call doneFn so that AngularJS
+//      // knows that the animation has concluded
+//            },
+            
+//            move: function (element, doneFn) {
+//                jQuery(element).fadeIn(1000, doneFn);
+//            },
+            
+//            leave: function (element, doneFn) {
+//                jQuery(element).fadeOut(1000, doneFn);
+//            }
+//        }
+//    }]);
