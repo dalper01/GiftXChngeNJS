@@ -4,15 +4,17 @@
 angular.module(ApplicationConfiguration.applicationModuleName, ApplicationConfiguration.applicationModuleVendorDependencies);
 
 // Setting HTML5 Location Mode
+//angular.module(ApplicationConfiguration.applicationModuleName).config(['$locationProvider', '$httpProvider', '$animateProvider',
+//  function ($locationProvider, $httpProvider, $animateProvider) {
 angular.module(ApplicationConfiguration.applicationModuleName).config(['$locationProvider', '$httpProvider',
-  function ($locationProvider, $httpProvider) {
-    $locationProvider.html5Mode(true).hashPrefix('!');
+    function ($locationProvider, $httpProvider) {
+        $locationProvider.html5Mode(true).hashPrefix('!');
+        $httpProvider.interceptors.push('authInterceptor');
 
-    $httpProvider.interceptors.push('authInterceptor');
   }
 ]);
 
-angular.module(ApplicationConfiguration.applicationModuleName).run(function ($rootScope, $state, Authentication) {
+angular.module(ApplicationConfiguration.applicationModuleName).run(function ($rootScope, $state, Authentication, $animate) {
 
   // Check authentication before changing state
   $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
@@ -79,23 +81,62 @@ angular.element(document).ready(function () {
   angular.bootstrap(document, [ApplicationConfiguration.applicationModuleName]);
 });
 
-//angular.module(ApplicationConfiguration.applicationModuleName).animation('.slide', [function ($window) {
-//        return {
-//            // make note that other events (like addClass/removeClass)
-//            // have different function input parameters
-//            enter: function (element, doneFn) {
-//                jQuery(element).fadeIn(1000, doneFn);
+//angular.module(ApplicationConfiguration.applicationModuleName).animation('.slide', [function () {
+        
+//        var elementPosition = 0;
+        
+//        var _move = function (element, doneFn) {
+//            console.log('_move');
+//            //jQuery(element).fadeIn(1000, doneFn);
+//            //elementWidth = $(element).css('width', 'auto').width();
+//            //$(element).animate({ width: 0 }, 600)
+//            element.css({ left: '100%' });
+//            element.animate({ "margin-left": elementPosition }, 600, doneFn);
 
-//      // remember to call doneFn so that AngularJS
-//      // knows that the animation has concluded
-//            },
-            
-//            move: function (element, doneFn) {
-//                jQuery(element).fadeIn(1000, doneFn);
-//            },
-            
-//            leave: function (element, doneFn) {
-//                jQuery(element).fadeOut(1000, doneFn);
-//            }
+//        };
+        
+//        var raiseZIndx = function (element, doneFn) {
+//            console.log('raiseZIndx');
+//            element.css({ 'z-index': '21' });
+//            console.log('new zindex: ' + element.css("z-index"));
+
 //        }
+        
+//        var _enter = function (element, doneFn) {
+//            console.log('_enter');
+//            element.css({ "position": 'relative', "left": '+=2500px', 'z-index': '1' });
+//            //$(element).animate({ left: $('#slide').position.left }, 600, doneFn);
+            
+//            elementPosition = $('.slide').position();
+//            console.log(elementPosition);
+//            console.log(elementPosition.left);
+            
+//            //element.css({ "left": '1500' });
+//            element.animate({ "left": '-=2500px', 'top': '50px', 'z-index': '21' }, 600, doneFn);
+
+//        };
+        
+//        var _leave = function (element, doneFn) {
+//            console.log('_leave');
+//            element.css({ "position": 'relative', 'z-index': '20' });
+//            //$(element).animate({ left: $('#slide').position.left }, 600);
+            
+//            element.animate({"position": "absolute", "left": '-=2500px', 'top': '50px'  }, 600, doneFn);
+
+//            //};
+
+//            //return returnObject;
+//            //return {
+//            //    move: move,
+//            //    enter: enter,
+//            //    leave: leave
+//            //};
+
+//        }
+//        return {
+//            enter: _enter,
+//            move: _move,
+//            leave: _leave
+//        }
+
 //    }]);

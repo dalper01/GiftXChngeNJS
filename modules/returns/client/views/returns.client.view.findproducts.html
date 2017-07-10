@@ -1,7 +1,4 @@
 ﻿<div class="row" style="height: 50px">
-
-</div>
-<div class="row" style="height: 50px">
 <a ui-sref="newreturn"> <-- Back to Returns </a>
 </div>
 
@@ -72,7 +69,7 @@
     </div>
 
 </div>
-<div class="col-sm-4" ng-show="newReturnHasItems()" >
+<div class="col-sm-4" ng-show="newReturnHasItems()"  style="max-height: 800px; overflow: scroll">
     <customer-return></customer-return>
     <a class="btn btn-primary pull-right" ng-show="searchResults.items.length > 0" ui-sref="newreturn"> Go to Checkout </a>
 </div>

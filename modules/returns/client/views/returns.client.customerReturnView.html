@@ -7,7 +7,7 @@
     </tr>
     <tr class="animate-repeat" ng-repeat="productReturn in newCustomerReturn.returnItems track by $index">
         <td>
-            <i class="glyphicon glyphicon-trash red-click" ng-click="RemoveReturn(productReturn, customerReturns.returnItems)"></i>
+            <i class="glyphicon glyphicon-trash red-click" ng-click="removeItemFromReturn(productReturn, newCustomerReturn.returnItems)"></i>
         </td>
 
         <td sclass="col-sm-1">

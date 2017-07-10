@@ -31,11 +31,12 @@
             return $scope.newCustomerReturn.returnItems.length > 0;
         }
 
-        $scope.RemoveReturn = function (productReturn, allReturns) {
+        $scope.removeItemFromReturn = function (productReturn, allReturns) {
             var index = allReturns.indexOf(productReturn);
             if (index > -1) {
                 allReturns.splice(index, 1);
             }
+            console.log('product not found')
         }
         
         

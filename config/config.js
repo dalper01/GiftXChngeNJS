@@ -4,9 +4,9 @@
  * Module dependencies.
  */
 var _ = require('lodash'),
-  chalk = require('chalk'),
-  glob = require('glob'),
-  fs = require('fs'),
+    chalk = require('chalk'),
+    glob = require('glob'),
+    fs = require('fs'),
   path = require('path');
 
 /**
