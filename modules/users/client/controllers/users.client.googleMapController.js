@@ -1,12 +1,13 @@
 ﻿'use strict';
 
-angular.module('users').controller('googleMapController', ['$scope', '$http',
-    function ($scope, $http) {
-        console.log('googleMapController')
+angular.module('users').controller('googleMapController', ['$scope', '$http', 'Users', 'Authentication',
+    function ($scope, $http, Users, Authentication) {
+        
+        $scope.user = Authentication.user;
         $scope.gPlace;
         $scope.myPlace = null;
-        
-        
+        $scope.placeConfirmClass = 'map-place-confirm-hidden';
+
         
         var geoLocationAPIUrl = 'https://freegeoip.net/json/';
         //var geoLocationAPIUrl = 'https://www.geoplugin.net/json.gp'; // need account
@@ -43,7 +44,7 @@ angular.module('users').controller('googleMapController', ['$scope', '$http',
         $scope.createMap = function (position) {
             var localLat = position.coords.latitude;
             var localLng = position.coords.longitude;
-            console.log('lat: ' + localLat + ', long:' + localLng);
+            //console.log('lat: ' + localLat + ', long:' + localLng);
 
             LatLng = new google.maps.LatLng(localLat, localLng);
             //$scope.local = local;
@@ -66,7 +67,6 @@ angular.module('users').controller('googleMapController', ['$scope', '$http',
         // get current lon / lat and create google map with it
         //navigator.geolocation.getCurrentPosition($scope.createMap);
         //$scope.createMap();
-        
         function createMarker(place) {
 
             var addressArray = place.formatted_address.split(',');
@@ -74,6 +74,7 @@ angular.module('users').controller('googleMapController', ['$scope', '$http',
             var marker = new google.maps.Marker({
                 name: place.name,
                 map: map,
+                animation: google.maps.Animation.DROP,
                 position: place.geometry.location,
                 photos: [],
                 photo_reference: place.photo_reference,
@@ -90,6 +91,8 @@ angular.module('users').controller('googleMapController', ['$scope', '$http',
                 scaledSize: new google.maps.Size(25, 25)
 
             });
+            marker.addListener('click', mapMarkerClick);
+
             if (place.photos != undefined && place.photos.length > 0) {
                 console.log(place.photos.length);
                 place.photos.forEach(function (element) {
@@ -115,33 +118,6 @@ angular.module('users').controller('googleMapController', ['$scope', '$http',
             $scope.markers.length = 0;
         }
 
-        function createMarkers(places) {
-            var bounds = new google.maps.LatLngBounds();
-            var placesList = document.getElementById('places');
-            
-            for (var i = 0, place; place = places[i]; i++) {
-                var image = {
-                    url: place.icon,
-                    size: new google.maps.Size(71, 71),
-                    origin: new google.maps.Point(0, 0),
-                    anchor: new google.maps.Point(17, 34),
-                    scaledSize: new google.maps.Size(25, 25)
-                };
-                
-                var marker = new google.maps.Marker({
-                    map: map,
-                    icon: image,
-                    title: place.name,
-                    position: place.geometry.location
-                });
-                
-                placesList.innerHTML += '<li>' + place.name + '</li>';
-                
-                //bounds.extend(place.geometry.location);
-            }
-            //map.fitBounds(bounds);
-        }
-        
         $scope.searchCallback = function (results, status) {
             console.log('searchCallback');
             if (status == google.maps.places.PlacesServiceStatus.OK) {
@@ -168,13 +144,65 @@ angular.module('users').controller('googleMapController', ['$scope', '$http',
 
 
         $scope.pickPlace = function (place) {
-            $scope.myPlace = place;
+            console.log(place);
+            if ($scope.myPlace != null) {
+                //$scope.myPlace = null; // reset contents
+                $scope.placeConfirmClass = 'map-place-confirm-hidden';
+                
+                if (!$scope.$$phase) {
+                    $scope.$digest();
+                }
+                window.setTimeout(function () {
+                    $scope.myPlace = place;
+                    $scope.placeConfirmClass = 'map-place-confirm-rollup';
+                    if (!$scope.$$phase) {
+                        $scope.$digest();
+                    }
+                }, 700);
+
+            }
+            else {
+                $scope.myPlace = place;
+                $scope.placeConfirmClass = 'map-place-confirm-rollup';
+                if (!$scope.$$phase) {
+                    $scope.$digest();
+                }
+            }
             moveMap(place.position);
+            $scope.myPlace.setAnimation(null);
+            place.setAnimation(google.maps.Animation.BOUNCE);
+            //place.animation = google.maps.Animation.DROP;
+            //$scope.myPlace = place;
+            //moveMap(place.position);
 
         }
+        
+        // map click call back
+        function mapMarkerClick() {
+            $scope.pickPlace(this);
+        }
 
+        $scope.saveLocation = function (myPlace) {
+            console.log('saveLocation');
 
+            var user = new Users($scope.user);
+            user.location = myPlace.location;
 
+            user.$update(function (response) {
+                //$scope.$broadcast('show-errors-reset', 'userForm');
+                
+                //$scope.success = true;
+                //Authentication.user = response;
+                console.log('response');
+                console.log(response);
+            }, function (response) {
+                $scope.error = response.data.message;
+                console.log('response');
+                console.log(response);
+            });
+
+        }
+        
     }]);
 
 angular.module('users').directive('googleplace', function () {
@@ -200,8 +228,3 @@ angular.module('users').directive('googleplace', function () {
         }
     };
 });
-//myApp.factory('myService', function() {});
-angular.module('users').controller('MyCtrl', ['$scope',
-    function ($scope) {
-        $scope.gPlace;
-    }]);

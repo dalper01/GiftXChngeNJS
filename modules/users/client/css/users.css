@@ -34,3 +34,38 @@
   min-height: 150px;
   max-height: 150px;
 }
+
+
+.map-place-confirm {
+  /*height:0px;*/ 
+  background: #e5feff;
+  overflow: hidden;
+  -moz-transition: .5s;
+  -ms-transition: .5s;
+  -o-transition: .5s;
+  -webkit-transition: .5s;
+  transition: .5s;
+  font-family: Roboto, Arial, sans-serif;
+}
+
+.map-place-confirm-hidden {
+      height: 0;
+}
+
+.map-place-confirm-rollup{
+    height: 130px;
+    overflow: hidden;
+    -webkit-transition: height .5s;
+    -moz-transition: height .5s;
+    transition: height .5s;
+}
+
+.details {
+  transition: opacity 1s;
+  opacity: 1;
+}
+
+.details[class*="-remove"] {
+  transition: none;
+  opacity: 0;
+}

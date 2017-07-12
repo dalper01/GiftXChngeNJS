@@ -8,15 +8,23 @@ angular.module('users').config(['$stateProvider',
       .state('settings', {
         abstract: true,
         url: '/settings',
-        templateUrl: 'modules/users/client/views/settings/settings.client.view.html',
-        data: {
-          roles: ['user', 'admin']
-        }
+        templateUrl: 'modules/users/client/views/settings/settings.client.view.html'
+        //data: {
+        //  roles: ['user', 'admin'] 
+        //}
       })
+      .state('settings.registerStore', {
+            url: '/registerStore',
+            templateUrl: 'modules/users/client/views/settings/set-location.client.view.html',
+            //controller: '',
+            data: {
+              roles: ['vendor']
+            }        
+        })
       .state('settings.profile', {
-        url: '/profile',
-        templateUrl: 'modules/users/client/views/settings/edit-profile.client.view.html'
-      })
+            url: '/profile',
+            templateUrl: 'modules/users/client/views/settings/edit-profile.client.view.html'
+        })
       .state('settings.password', {
         url: '/password',
         templateUrl: 'modules/users/client/views/settings/change-password.client.view.html'

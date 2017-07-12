@@ -1,21 +1,17 @@
 'use strict';
 
-//angular.module('core')
-//  .filter('hello', function () {
-//    return function (input) {
-//        return 'hello ' + input;
-//    }
-//});
-
 angular.module('core').controller('HeaderController', ['$scope', '$state', 'Authentication', 'Menus',
     function ($scope, $state, Authentication, Menus) {
         
-        $scope.totalMessages = 0;
-        $scope.urgentMessages = 0;
-        $scope.unreadMessages = 0;
+        var initisalizeMessageData = function () {
+            $scope.totalMessages = 0;
+            $scope.urgentMessages = 0;
+            $scope.unreadMessages = 0;
+        }
 
 
         $scope.countMessagesTypes = function () {
+            initisalizeMessageData();
             if ($scope.authentication.user) {
 
                 $scope.totalMessages = $scope.authentication.user.messages.length;
@@ -52,5 +48,8 @@ angular.module('core').controller('HeaderController', ['$scope', '$state', 'Auth
         });
 
         $scope.countMessagesTypes();
+        $scope.$watch('authentication.user', function (newValue, oldValue, scope) {
+            $scope.countMessagesTypes();
+        });
     }
 ]);

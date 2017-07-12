@@ -1,5 +1,5 @@
 <section ng-controller="SettingsController">
-  <div class="page-header">
+  <div class="page-header" style="padding-top:0; margin-top: 0;">
     <h1>Settings</h1>
   </div>
   <div class="row">
@@ -14,8 +14,8 @@
         <li ui-sref-active="active" ng-show="user.provider === 'local'">
           <a ui-sref="settings.password">Change Password</a>
         </li>
-        <li ui-sref-active="active">
-          <a ui-sref="settings.accounts">Manage Social Accounts</a>
+        <li ui-sref-active="active" ng-if="user.type=='vendor'">
+          <a ui-sref="settings.registerStore">Register Store</a>
         </li>
       </ul>
     </nav>

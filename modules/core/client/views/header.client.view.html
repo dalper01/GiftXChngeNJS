@@ -32,10 +32,10 @@
         </ul>
 
         <ul class="nav navbar-nav navbar-right" ng-show="authentication.user">
-            <li class="dropdown" dropdown style="height: 50px; min-width: 40px; align-content: center">
-                <a class="dropdown-toggle user-header-dropdown-toggle" dropdown-toggle role="navigation">
-                    <span class="navbar-icon">
-                        <i class="fa-li fa fa-envelope-o " ng-class="{'unread-messages': unreadMessages > 0}" aria-hidden="false"></i>
+            <li class="dropdown" dropdown style="height: 50px; align-content: center; padding: 0; width:50px;">
+                <a href="#" class="dropdown-toggle user-header-dropdown-toggle" dropdown-toggle role="navigation">
+                    <span class="navbar-icon" ng-click="">
+                        <i class="fa-li fa fa-envelope-o " style="" ng-class="{'unread-messages': unreadMessages > 0}" aria-hidden="false"></i>
                     </span>
                 </a>
                 <ul class="dropdown-menu" role="menu">
@@ -51,24 +51,19 @@
                 </ul>
             </li>
 
-            <li class="dropdown" dropdown style="align-content: center" ng-if="urgentMessages">
-                <a class="dropdown-toggle user-header-dropdown-toggle" dropdown-toggle role="navigation" style="height: 50px; min-width: 80px; ">
-                    <span class="navbar-icon" not-style="color: red; height: 50px; min-width: 30px">
-                        <i class="fa-li fa fa-exclamation-circle" style="color:red; min-width: 30px" aria-hidden="true">&nbsp;</i>
+            <li class="dropdown" dropdown style="height: 50px; align-content: center; padding: 0; width:50px;">
+                <a href="#" class="dropdown-toggle user-header-dropdown-toggle" dropdown-toggle role="navigation">
+                    <span class="navbar-icon" ng-click="">
+                        <i class="fa-li fa fa-exclamation-circle" style="align-content: center; color:red;" not-style="color:red; position: relative; left: 0px;" aria-hidden="true"></i>
                     </span>
                 </a>
                 <ul class="dropdown-menu" role="menu">
-                    <li ui-sref-active="active">
-                        <a ui-sref="userMessages" style="color: red; ">Urgent {{urgentMessages}}</a>
-                    </li>
-                    <li ui-sref-active="active">
-                        <a ui-sref="settings.profile">Unread {{unreadMessages}}</a>
-                    </li>
-                    <li ui-sref-active="active" ng-show="authentication.user.provider === 'local'">
-                        <a ui-sref="settings.profile">Total {{totalMessages}}</a>
+                    <li ui-sref-active="active" ng-repeat="message in authentication.user.messages | filter: {status: {urgent: true}} track by $index">
+                        <a ui-sref="{{message.navigate}}" style="color: red;" ng-bind="message.title"></a>
                     </li>
                 </ul>
             </li>
+
 
             <li class="dropdown" dropdown>
                 <a class="dropdown-toggle user-header-dropdown-toggle" dropdown-toggle role="button">

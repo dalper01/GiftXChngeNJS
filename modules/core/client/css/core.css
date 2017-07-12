@@ -1,12 +1,13 @@
 html,body {
-    height:100%;
+    /*height:100%;*/
     width: 100%;
-    overflow: hidden;
+    /*overflow: scroll;*/
     padding:0;
     margin:30px 0 0 0;
+    /*border-bottom: 1px solid;*/
 }
 
-/* header syles */
+/* NavBar */
 .navbar-icon {
     height: 50px;
 }
@@ -14,7 +15,10 @@ html,body {
 .navbar-icon > i {
     color: white;
     font-size: 21px; 
-    margin-top: 11px;
+    width: 20px;
+    /*margin-top: 0px;*/
+     position: relative; 
+     left: 0px;
 }
 
 .unread-messages {
@@ -71,7 +75,7 @@ html,body {
     color: #ddd
 }
 .content {
-  margin-top: 50px;
+  margin-top: 20px;
 }
 .undecorated-link:hover {
   text-decoration: none;
@@ -122,26 +126,10 @@ a:hover .header-profile-image {
 
 /*Maps Panel*/
 #right-panel {
-    font-family: 'Roboto','sans-serif';
-    /*line-height: 30px;*/
-
-}
-
-#right-panel select, #right-panel input {
-    font-size: 15px;
-}
-
-#right-panel select {
-    width: 100%;
-}
-
-#right-panel i {
-    font-size: 12px;
-}
-#right-panel {
     resize: both;
     opacity: .9;
-    font-family: Arial, Helvetica, sans-serif;
+    /*font-family: Arial, Helvetica, sans-serif;*/
+    font-family: 'Roboto','sans-serif';
     position: absolute;
     right: 5px;
     /*top: 60%;*/
@@ -157,6 +145,19 @@ a:hover .header-profile-image {
     overflow-x: hidden;
 
 }
+
+#right-panel select, #right-panel input {
+    font-size: 15px;
+}
+
+#right-panel select {
+    width: 100%;
+}
+
+#right-panel i {
+    font-size: 12px;
+}
+
 
 .right-panel ul {
     list-style-type: none;
@@ -195,9 +196,9 @@ a:hover .header-profile-image {
     padding-right: 4px;
     text-decoration: none;
 }
-slide.ng-enter {
+/*.slide.ng-enter {
     z-index: 1;
-}
+}*/
 
 /*animation classes*/
 /*.slide {
@@ -270,4 +271,10 @@ slide.ng-enter {
 .repeat.ng-enter.ng-enter-active {
   opacity:1;
   max-height:30px;
+}
+
+
+
+.header-confirm {
+
 }

@@ -1,0 +1,64 @@
+﻿<!-- Google Maps Address Search -->
+<div class="col-xs-12" ng-controller="googleMapController" style="margin-top:15px; height: 100%">
+    <div class="row" style="height: 100%">
+        <div class="col-md-6 map-place-confirm {{placeConfirmClass || 'map-place-confirm-hidden'}}">
+            <span style="font-style: italic; margin-bottom: 5px; text-decoration: underline">is this your store?</span>
+            <h3 style="font-size: 15px; font-family: Roboto, Arial, sans-serif; font-weight: bold; line-height: 16px; margin:0; padding:0; padding-bottom: 2px;">
+                {{myPlace.name}}
+            </h3>
+            {{myPlace.full_address}}
+            <a class="btn btn-success" style="margin-top: 10px;" ng-click="saveLocation(myPlace)">
+                <i class="fa fa-check" aria-hidden="true"></i>Confirm
+            </a>
+        </div>
+        <div class="col-md-6" style="height: 130px;">
+            <div><span class="header">Enter Store Name or Address</span> </div>
+            <form ng-submit="gmapSearch(chosenPlace)">
+                <div class="input-group">
+
+                    <input class="form-control" ng-model="chosenPlace" googleplace />
+                    <span class="input-group-btn">
+                        <button class="btn btn-success" type="button" ng-click="gmapSearch(chosenPlace)">Find</button>
+                    </span>
+
+                </div>
+            </form>
+        </div>
+        <div class="col-xs-12" style="height: 100%">
+            <div style="margin-top:10px;"> <span class="header">Search Term:</span> {{chosenPlace}} </div>
+            <div id="map" class="col-xs-12" style="margin-bottom: 25px;min-height: 400px; min-width:100px; height: 100%; width: 100% "></div>
+            <div id="right-panel" class="right-panel">
+                <ul id="places">
+                    <li ng-repeat="place in markers track by $index" ng-click="pickPlace(place)">
+                        <a href="#" ng-click="pickPlace(place)">
+                            <!--<div style="display: inline-block">
+                                <img src="{{place.photos[0]}}" style="max-height: 50px; max-width:50px" />
+                            </div>-->
+                            <!--<div style="display: inline-block">-->
+                            <!--<img src="{
+                            {place.url}}" class="search-icon" />-->
+                            <h3 style="font-size: 15px; line-height: 16px; margin:0; padding:0; padding-bottom: 2px;">
+                                {{place.name}}
+                            </h3>
+                            {{place.types[0]}}
+                            <br />
+                            {{place.streetAddress}}
+                            <br />
+                            {{place.cityStateAddress}}
+                            <!--{{place.address.split(',')[0]}}-->
+                            <!--</div>-->
+                        </a>
+                    </li>
+
+                </ul>
+                <div class="section-pagination-container pull-right">
+                    na
+                    
+                    Showing results <i class="glyphicon glyphicon-chevron-left section-pagination-button"></i><i class="glyphicon glyphicon-chevron-right section-pagination-button"></i>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
