@@ -37,7 +37,7 @@ function Utf8ArrayToStr(array) {
                        ((char3 & 0x3F) << 0));
                 break;
         }
-    }
+    };
     
     return out;
 }
@@ -87,7 +87,7 @@ var createItem = function (item) {
             }
         });
     });
-}
+};
 
 var searchProviderByKeyWord = function (searchParams) {
     
@@ -116,7 +116,7 @@ var searchProviderByKeyWord = function (searchParams) {
             "connection": "keep-alive",
             'Content-Length': Buffer.byteLength(postArgs)
         }
-    }
+    };
         
     return new Promise(function (resolve, reject) {
         
@@ -140,17 +140,17 @@ var searchProviderByKeyWord = function (searchParams) {
         upcitemdbReq.on('error', function (e) {
             console.log('problem with request: ' + e.message);
             reject(e);
-        })
+        });
         upcitemdbReq.write(postArgs);
         upcitemdbReq.end();
     });
-}
+};
 
 var searchProviderByUPC = function (opts, lookupUPC) {
     
     var lookupReturnData;
     var jsonReturnData;
-    const https = require('https')
+    const https = require('https');
     
     return new Promise(function (resolve, reject) {
 
@@ -170,18 +170,18 @@ var searchProviderByUPC = function (opts, lookupUPC) {
                 //console.log('lookupReturnData: ' + lookupReturnData);
                                 
                 resolve(lookupReturnData);
-            })
+            });
         });
         
         upcitemdbReq.on('error', function (e) {
             console.log('problem with request: ' + e.message);
             reject(e);
-        })
-        upcitemdbReq.write('{ "upc": "' + lookupUPC + '" }')
+        });
+        upcitemdbReq.write('{ "upc": "' + lookupUPC + '" }');
         // other requests
-        upcitemdbReq.end()
+        upcitemdbReq.end();
     });
-}
+};
 
 /**
  * Create a Return
@@ -215,7 +215,7 @@ exports.itemKeywordSearch = function (req, res) {
     var searchParams = {
         lookupKeyword: req.params.keyword,
         offset: req.params.offset || 0
-    }
+    };
     
     //exports.dbitemSearch(req, res, searchParams);
     searchProviderByKeyWord(searchParams)
@@ -223,13 +223,13 @@ exports.itemKeywordSearch = function (req, res) {
         console.log(data);
         data.searchTerm = searchParams.lookupKeyword;
         res.json({ 'data': data });
-    }), function (err) {
+    }, function (err) {
         console.log(err);  
-    };
+    });
 
      //write UPC to Database
 
-}
+};
 
 
 exports.validateUPC = function (req, res) {
@@ -255,7 +255,7 @@ exports.validateUPC = function (req, res) {
                     "user_key": "only_for_dev_or_pro",
                     "key_type": "3scale"
                 }
-            }
+            };
             
             searchProviderByUPC(opts, lookupUPC)
             .then(function (data) {
@@ -283,7 +283,7 @@ exports.validateUPC = function (req, res) {
         console.log(error);
     };
 
-}
+};
 
 
 
@@ -346,7 +346,7 @@ exports.list = function (req, res) {
                 message: errorHandler.getErrorMessage(err)
             });
         } else {
-            console.log('number of returns: ' + returns.length)
+            //console.log('number of returns: ' + returns.length);
             res.json(returns);
         }
     });

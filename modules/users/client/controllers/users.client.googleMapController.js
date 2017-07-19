@@ -72,18 +72,21 @@ angular.module('users').controller('googleMapController', ['$scope', '$http', 'U
             var addressArray = place.formatted_address.split(',');
             var placeLoc = place.geometry.location;
             var marker = new google.maps.Marker({
-                name: place.name,
+                data: {
+                    name: place.name,
+                    position: place.geometry.location,
+                    place_id: place.place_id,
+                    id: place.id,
+                    types: place.types,
+                    streetAddress: addressArray[0],
+                    cityStateAddress: addressArray[1] + ', ' + addressArray[2],
+                    full_address: place.formatted_address,
+                },
                 map: map,
                 animation: google.maps.Animation.DROP,
                 position: place.geometry.location,
                 photos: [],
                 photo_reference: place.photo_reference,
-                place_id: place.place_id,
-                id: place.id,
-                types: place.types,
-                streetAddress: addressArray[0],
-                cityStateAddress: addressArray[1] + ', ' + addressArray[2],
-                full_address: place.formatted_address,
                 url: place.icon,
                 size: new google.maps.Size(71, 71),
                 origin: new google.maps.Point(0, 0),
@@ -186,18 +189,33 @@ angular.module('users').controller('googleMapController', ['$scope', '$http', 'U
             console.log('saveLocation');
 
             var user = new Users($scope.user);
-            user.location = myPlace.location;
+            user.locationData = myPlace.data;
+            
+            // remove urgent location message from user object's save
+            var urgentLocationMessage = user.messages.find(function (message) {
+                return message.title == 'Register your Store'
+            });
+            console.log('urgentLocationMessage')
+            console.log(urgentLocationMessage)
+            if (urgentLocationMessage != null) {
+                urgentLocationMessage.status.urgent = false;
+                urgentLocationMessage.status.unRead = false;
+            }
+
 
             user.$update(function (response) {
                 //$scope.$broadcast('show-errors-reset', 'userForm');
                 
                 //$scope.success = true;
-                //Authentication.user = response;
-                console.log('response');
+                Authentication.user = response;
+                console.log('save success response');
                 console.log(response);
+
+
+
             }, function (response) {
                 $scope.error = response.data.message;
-                console.log('response');
+                console.log('save error response');
                 console.log(response);
             });
 

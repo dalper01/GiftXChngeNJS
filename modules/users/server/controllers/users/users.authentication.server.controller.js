@@ -31,6 +31,7 @@ exports.signup = function (req, res) {
     
     
     // initialize first messages
+
     user.messages = [{
             title: 'Welcome to Gift Exchange',
             body: 'Thank you for registering!',
@@ -42,7 +43,7 @@ exports.signup = function (req, res) {
         user.messages.push({
             title: 'Register your Store',
             body: '',
-            navigate: 'registerStore',
+            navigate: 'settings.registerStore',
             status: {
                 urgent: true
             }
