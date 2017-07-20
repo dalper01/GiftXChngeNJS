@@ -9,7 +9,7 @@ var path = require('path'),
     Item = mongoose.model('Item'),
     errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller'));
 
-function Utf8ArrayToStr(array) {
+function utf8ArrayToStr(array) {
     var out, i, len, c;
     var char2, char3;
     
@@ -37,7 +37,7 @@ function Utf8ArrayToStr(array) {
                        ((char3 & 0x3F) << 0));
                 break;
         }
-    };
+    }
     
     return out;
 }
@@ -131,7 +131,7 @@ var searchProviderByKeyWord = function (searchParams) {
             });
 
             response.on('end', function () {
-                var returnString = Utf8ArrayToStr(Buffer.concat(chunks));
+                var returnString = utf8ArrayToStr(Buffer.concat(chunks));
                 jsonReturnData = JSON.parse(returnString);
                 resolve(jsonReturnData);
             });

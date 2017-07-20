@@ -1,0 +1,15 @@
+# pack-refs with: peeled fully-peeled 
+e14088039748ba515e7de3f5a44ec20965337537 refs/remotes/origin/0.4.x
+55c85b97e4d8d33c8a9bd2341f42e5854bb1b473 refs/remotes/origin/gulp-coverage
+44a569ee1fa489d8ad4bfd43db9deabd3ca2e00e refs/remotes/origin/master
+5a6ce70ba6f35e0064fe946d640ff0e5bbffc6c0 refs/remotes/origin/meanjs2
+d2df3f65d10fca6ecb72876144a7a2eebd56393e refs/remotes/origin/snyk-fix-1e3e4a9a
+8f50eecc7c1ec7dda3363093b3b3e7f17ca9a692 refs/remotes/origin/snyk-fix-2d1b0dfb
+a1a01c9fe1cffc79edfbc1c038580d57a0b69bcb refs/remotes/origin/snyk-fix-80d15673
+2c318dac9558065e25cbc4370e1154f0f0105b98 refs/remotes/origin/snyk-fix-ae507be9
+e14088039748ba515e7de3f5a44ec20965337537 refs/tags/0.4.2
+fd154c7f61a1b9c9a1ea0d4f1f1e5fa1cb967da1 refs/tags/0.5.0
+3bc1de2543eb455f4ab77fbbd17fe0304e7f0959 refs/tags/v0.3.3
+d0613cea7938bcbb6b8d8e6c3c48e1573b0d5da0 refs/tags/v0.4.0
+3890aaedf407151fd6b50d72ad55d5d7566a539b refs/tags/v0.4.1
+e14088039748ba515e7de3f5a44ec20965337537 refs/tags/v0.4.2
