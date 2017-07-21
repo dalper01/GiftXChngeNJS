@@ -278,10 +278,10 @@ exports.validateUPC = function (req, res) {
 
 
         }
-    }), function (error) {
+    }, function (error) {
         console.log('findItemByUPC error');
         console.log(error);
-    };
+    });
 
 };
 
@@ -334,8 +334,13 @@ exports.validateUPC = function (req, res) {
  */
 exports.list = function (req, res) {
     //req.params
+    var userId;
     console.log(req.user);
-    var userId = req.user["_id"];
+
+    /* jshint ignore:start*/
+    userId = req.user["_id"];
+    /* jshint ignore:end */
+
     console.log("req.user._id");
     console.log(userId);
     //var query = {}
