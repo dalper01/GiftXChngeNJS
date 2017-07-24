@@ -38,7 +38,7 @@ exports.signup = function (req, res) {
             navigate: null
         }];
 
-    if (user.type == 'vendor') {
+    if (user.type === 'vendor') {
         user.roles = ['vendor'];
         user.messages.push({
             title: 'Register your Store',

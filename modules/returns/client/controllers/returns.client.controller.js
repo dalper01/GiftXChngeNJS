@@ -1,4 +1,6 @@
-﻿angular.module('returns').controller('NewReturnsController', ['$http', '$scope', '$state', '$stateParams', '$location', 'Authentication', 'customerReturnService', 'searchProductService',
+﻿'use strict';
+
+angular.module('returns').controller('NewReturnsController', ['$http', '$scope', '$state', '$stateParams', '$location', 'Authentication', 'customerReturnService', 'searchProductService',
     function ($http, $scope, $state, $stateParams, $location, Authentication, customerReturnService, searchProductService) {
         $scope.user = Authentication.user;
         //console.log($scope.user);
@@ -25,30 +27,30 @@
                 return 0;
             }
             return 1;
-        }
+        };
         
         $scope.newReturnHasItems = function() {
             return $scope.newCustomerReturn.returnItems.length > 0;
-        }
+        };
 
         $scope.removeItemFromReturn = function (productReturn, allReturns) {
             var index = allReturns.indexOf(productReturn);
             if (index > -1) {
                 allReturns.splice(index, 1);
             }
-            console.log('product not found')
-        }
+            console.log('product not found');
+        };
         
         
         $scope.AddToReturn = function (productReturn) {
             //$scope.productReturns.push(productReturn);
             customerReturnService.addReturnItem(productReturn);
             console.log($scope.newCustomerReturn);
-        }
+        };
         
         $scope.findKeyword = function (keyword) {
             if (!$scope.checkInput(keyword, 'keyword'))
-                return
+                return;
             
             
             promise = searchProductService.findKeyword(keyword);
@@ -62,12 +64,12 @@
                 alert(error);
                 console.log(error);
             });
-        }
+        };
         
         
         $scope.findUPC = function (upc) {
             if (!$scope.checkInput(upc, 'UPC'))
-                return
+                return;
             
             $http({
                 url: '/api/validupc/' + $scope.NewUPC,
@@ -76,7 +78,7 @@
             }).success(function (data, status, headers, config) {
                 console.log(data);
                 //if (data.UPC == undefined || data.UPC.length == 0 || data.description == undefined || data.description.length == 0) {
-                if (data == undefined) {
+                if (data === undefined) {
                     alert('Product Not Found');
                     return;
                 }
@@ -98,7 +100,7 @@
             console.log($scope.newCustomerReturn);
             
             // if user not logged in, prompt for login
-            if ($scope.user.displayName == null || $scope.user.displayName == undefined) {
+            if ($scope.user.displayName === null || $scope.user.displayName === undefined) {
                 alert('Login / Register to complete return');
                 return;
             }
@@ -120,7 +122,7 @@
                 //upload failed
             });
 
-        }
+        };
 
 
 

@@ -97,7 +97,7 @@ var searchProviderByKeyWord = function (searchParams) {
 
     var lookupReturnData;
     var jsonReturnData = '';
-    const https = require('https');
+    var https = require('https');
 
     var postArgs = JSON.stringify({
         "s": searchParams.lookupKeyword,
@@ -105,7 +105,7 @@ var searchProviderByKeyWord = function (searchParams) {
         "match_mode": 1
     });
 
-    const opts = {
+    var opts = {
         hostname: 'api.upcitemdb.com',
         path: '/prod/trial/search',
         method: 'POST',
@@ -150,7 +150,7 @@ var searchProviderByUPC = function (opts, lookupUPC) {
     
     var lookupReturnData;
     var jsonReturnData;
-    const https = require('https');
+    var https = require('https');
     
     return new Promise(function (resolve, reject) {
 

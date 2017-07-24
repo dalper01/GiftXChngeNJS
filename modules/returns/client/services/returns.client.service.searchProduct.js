@@ -45,7 +45,7 @@ angular.module('returns').factory('searchProductService', ['$resource', '$http',
             });
             
             return deferred.promise;
-        }
+        };
 
         return returnService;
 

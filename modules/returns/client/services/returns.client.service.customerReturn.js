@@ -21,23 +21,23 @@ angular.module('returns').factory('customerReturnService', ['$resource', '$http'
         
         customerReturnService.getNewCustomerReturn = function () {
             return _newCustomerReturn;
-        }
+        };
         
         customerReturnService.setNewCustomerReturn = function (data) {
             angular.copy(data, _newCustomerReturn);
-        }
+        };
         
         customerReturnService.clearNewCustomerReturn = function () {
             customerReturnService.setNewCustomerReturn({ returnItems: [] });
-        }
+        };
         
         customerReturnService.addReturnItem = function (item) {
             _newCustomerReturn.returnItems.push(item);
-        }
+        };
         
         customerReturnService.removeReturnItem = function (item) {
             _newCustomerReturn.returnItems.push(item);
-        }
+        };
         
         // Search for product-items by keyword descriptions and filters
         customerReturnService.getReturns = function () {
@@ -50,7 +50,7 @@ angular.module('returns').factory('customerReturnService', ['$resource', '$http'
             })
             .success(function (data, status, headers, config) {
                 //setProductSearch() -- refactor
-                angular.copy(data.data, _productSearch);
+                //angular.copy(data.data, _productSearch);
                 deferred.resolve(data);
             })
             .error(function (error) {
@@ -58,7 +58,7 @@ angular.module('returns').factory('customerReturnService', ['$resource', '$http'
             });
             
             return deferred.promise;
-        }
+        };
 
         
         

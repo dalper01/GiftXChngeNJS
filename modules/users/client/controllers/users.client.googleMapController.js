@@ -1,10 +1,11 @@
 ﻿'use strict';
+/*globals google */
 
 angular.module('users').controller('googleMapController', ['$scope', '$http', 'Users', 'Authentication',
     function ($scope, $http, Users, Authentication) {
         
         $scope.user = Authentication.user;
-        $scope.gPlace;
+        //$scope.gPlace;
         $scope.myPlace = null;
         $scope.placeConfirmClass = 'map-place-confirm-hidden';
 
@@ -56,13 +57,13 @@ angular.module('users').controller('googleMapController', ['$scope', '$http', 'U
             });
             
             service = new google.maps.places.PlacesService(map);
-        }
+        };
         
         var moveMap = function (location) {
             map.setCenter(location);
             //console.log('set center: ');
             //console.log(location);
-        }
+        };
         
         // get current lon / lat and create google map with it
         //navigator.geolocation.getCurrentPosition($scope.createMap);
@@ -96,11 +97,11 @@ angular.module('users').controller('googleMapController', ['$scope', '$http', 'U
             });
             marker.addListener('click', mapMarkerClick);
 
-            if (place.photos != undefined && place.photos.length > 0) {
+            if (place.photos !== undefined && place.photos.length > 0) {
                 console.log(place.photos.length);
                 place.photos.forEach(function (element) {
                     //console.log(element);
-                    marker.photos.push(element.getUrl({ maxWidth: 640}));
+                    marker.photos.push(element.getUrl({ maxWidth: 640 }));
                 });
             }
             //console.log(place);
@@ -123,7 +124,7 @@ angular.module('users').controller('googleMapController', ['$scope', '$http', 'U
 
         $scope.searchCallback = function (results, status) {
             console.log('searchCallback');
-            if (status == google.maps.places.PlacesServiceStatus.OK) {
+            if (status === google.maps.places.PlacesServiceStatus.OK) {
                 clearMarkers();
                 for (var i = 0; i < results.length; i++) {
                     var place = results[i];
@@ -133,22 +134,22 @@ angular.module('users').controller('googleMapController', ['$scope', '$http', 'U
                 moveMap($scope.markers[0].position);
                 $scope.$digest();
             }
-        }
+        };
         
         $scope.gmapSearch = function (keyWords) {
-            console.log('gmapSearch')
+            console.log('gmapSearch');
             var request = { query: keyWords, radius: 20, location: LatLng, rankBy: google.maps.places.RankBy.DISTANCE };
             console.log('request');
-            console.log(request)
+            console.log(request);
             service.textSearch(request, $scope.searchCallback);
             console.log('textSearch done');
         
-        }
+        };
 
 
         $scope.pickPlace = function (place) {
             console.log(place);
-            if ($scope.myPlace != null) {
+            if ($scope.myPlace !== null) {
                 //$scope.myPlace = null; // reset contents
                 $scope.placeConfirmClass = 'map-place-confirm-hidden';
                 
@@ -178,10 +179,11 @@ angular.module('users').controller('googleMapController', ['$scope', '$http', 'U
             //$scope.myPlace = place;
             //moveMap(place.position);
 
-        }
+        };
         
         // map click call back
         function mapMarkerClick() {
+            /*jshint validthis:true */
             $scope.pickPlace(this);
         }
 
@@ -193,11 +195,13 @@ angular.module('users').controller('googleMapController', ['$scope', '$http', 'U
             
             // remove urgent location message from user object's save
             var urgentLocationMessage = user.messages.find(function (message) {
-                return message.title == 'Register your Store'
+                return message.title === 'Register your Store';
             });
-            console.log('urgentLocationMessage')
-            console.log(urgentLocationMessage)
-            if (urgentLocationMessage != null) {
+
+            //console.log('urgentLocationMessage')
+            //console.log(urgentLocationMessage)
+
+            if (urgentLocationMessage !== null) {
                 urgentLocationMessage.status.urgent = false;
                 urgentLocationMessage.status.unRead = false;
             }
@@ -219,7 +223,7 @@ angular.module('users').controller('googleMapController', ['$scope', '$http', 'U
                 console.log(response);
             });
 
-        }
+        };
         
     }]);
 
@@ -239,8 +243,8 @@ angular.module('users').directive('googleplace', function () {
             google.maps.event.addListener(scope.gPlace, 'place_changed', function () {
                 scope.$apply(function () {
                     model.$setViewValue(element.val());
-                    console.log('element')
-                    console.log(element)
+                    //console.log('element')
+                    //console.log(element)
                 });
             });
         }

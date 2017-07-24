@@ -7,7 +7,7 @@ angular.module('core').controller('HeaderController', ['$scope', '$state', 'Auth
             $scope.totalMessages = 0;
             $scope.urgentMessages = 0;
             $scope.unreadMessages = 0;
-        }
+        };
 
 
         $scope.countMessagesTypes = function () {
@@ -24,7 +24,7 @@ angular.module('core').controller('HeaderController', ['$scope', '$state', 'Auth
                         $scope.unreadMessages++;
                 });
             }
-        }
+        };
 
         // Expose view variables
         $scope.$state = $state;

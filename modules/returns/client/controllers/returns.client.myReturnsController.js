@@ -1,9 +1,11 @@
-﻿angular.module('returns').controller('MyReturnsController', ['$http', '$scope', '$state', '$stateParams', '$location', 'Authentication', 'customerReturnService', 'searchProductService',
+﻿'use strict';
+
+angular.module('returns').controller('MyReturnsController', ['$http', '$scope', '$state', '$stateParams', '$location', 'Authentication', 'customerReturnService', 'searchProductService',
     function ($http, $scope, $state, $stateParams, $location, Authentication, customerReturnService, searchProductService) {
     	$scope.user = Authentication.user;
         
-        $scope.dateFormat = function (date) {
-            var date = new Date(date);
+        $scope.dateFormat = function (dateString) {
+            var date = new Date(dateString);
             var year = date.getFullYear();
             ///// Add 1 because JavaScript months start at 0
             var month = (1 + date.getMonth()).toString();
@@ -11,7 +13,7 @@
             var day = date.getDate().toString();
             day = day.length > 1 ? day : '0' + day;
             return month + '/' + day + '/' + year;
-        }
+        };
         $http({
             //url: constants.uriReturns,
             url: 'api/returns',
@@ -24,7 +26,7 @@
             //deferred.resolve(data);
         })
             .error(function (error) {
-            deferred.reject(error);
+            //deferred.reject(error);
         });
 
 

@@ -1,4 +1,6 @@
-﻿angular.module('returns').controller('confirmController', ['$scope', '$state', 'customerReturnService', 
+﻿'use strict';
+
+angular.module('returns').controller('confirmController', ['$scope', '$state', 'customerReturnService', 
     function ($scope, $state, customerReturnService) {
         
         $scope.confirmReturn = $state.params.confirmReturn;
@@ -74,5 +76,5 @@ angular.module('returns').controller('testConfirmController', function ($scope) 
         ], 
         "created" : "2017-06-27T01:10:31.429+0000", 
         "__v" : 0
-    }
+    };
 });
