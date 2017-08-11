@@ -1,9 +1,10 @@
 'use strict';
-
+console.log('Article Model Unit Tests');
 /**
  * Module dependencies.
  */
 var should = require('should'),
+//  assert = require('assert'),
   mongoose = require('mongoose'),
   User = mongoose.model('User'),
   Article = mongoose.model('Article');
@@ -20,12 +21,11 @@ describe('Article Model Unit Tests:', function () {
 
   beforeEach(function (done) {
     user = new User({
-      firstName: 'Full',
-      lastName: 'Name',
+      name: 'Full Name',
       displayName: 'Full Name',
-      email: 'test@test.com',
-      username: 'username',
-      password: 'M3@n.jsI$Aw3$0m3'
+      email: 'testAMUT@test.com',
+      password: 'M3@n.jsI$Aw3$0m3',
+      provider: 'local'
     });
 
     user.save(function () {
@@ -42,7 +42,9 @@ describe('Article Model Unit Tests:', function () {
   describe('Method Save', function () {
     it('should be able to save without problems', function (done) {
       this.timeout(10000);
-      return article.save(function (err) {
+      article.save(function (err) {
+        //console.log('Method Save success');
+        //console.log(err);
         should.not.exist(err);
         done();
       });
@@ -51,7 +53,9 @@ describe('Article Model Unit Tests:', function () {
     it('should be able to show an error when try to save without title', function (done) {
       article.title = '';
 
-      return article.save(function (err) {
+      article.save(function (err) {
+        //console.log('article.save no title');
+        //console.log(err);
         should.exist(err);
         done();
       });

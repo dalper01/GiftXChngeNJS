@@ -4,7 +4,7 @@
  * Chat client controller tests
  */
 (function () {
-  describe('ChatController', function () {
+  xdescribe('ChatController', function () {
     //Initialize global variables
     var scope,
       Socket,

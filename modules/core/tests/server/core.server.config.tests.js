@@ -27,21 +27,16 @@ describe('Configuration Tests:', function () {
         should.not.exist(err);
 
         user1 = {
-          username: 'user_config_test',
+          name: 'user_config_test',
           provider: 'local',
           email: 'user_config_test_@localhost.com',
-          firstName: 'User',
-          lastName: 'Local',
-          displayName: 'User Local',
           roles: ['user']
         };
 
         admin1 = {
-          username: 'admin_config_test',
+          name: 'admin_config_test',
           provider: 'local',
           email: 'admin_config_test_@localhost.com',
-          firstName: 'Admin',
-          lastName: 'Local',
           displayName: 'Admin Local',
           roles: ['user', 'admin']
         };
@@ -63,18 +58,18 @@ describe('Configuration Tests:', function () {
 
     it('should have seedDB configuration set for "regular" user', function() {
       (typeof userFromSeedConfig).should.not.equal('undefined');
-      should.exist(userFromSeedConfig.username);
+      should.exist(userFromSeedConfig.name);
       should.exist(userFromSeedConfig.email);
     });
 
     it('should have seedDB configuration set for admin user', function() {
       (typeof adminFromSeedConfig).should.not.equal('undefined');
-      should.exist(adminFromSeedConfig.username);
+      should.exist(adminFromSeedConfig.name);
       should.exist(adminFromSeedConfig.email);
     });
 
     it('should not be an admin user to begin with', function(done) {
-      User.find({ username: 'admin' }, function(err, users) {
+      User.find({ email: 'admin_config_test_@localhost.com' }, function(err, users) {
         should.not.exist(err);
         users.should.be.instanceof(Array).and.have.lengthOf(0);
         return done();
@@ -82,7 +77,7 @@ describe('Configuration Tests:', function () {
     });
 
     it('should not be a "regular" user to begin with', function(done) {
-      User.find({ username: 'user' }, function(err, users) {
+      User.find({ email: 'user_config_test_@localhost.com' }, function(err, users) {
         should.not.exist(err);
         users.should.be.instanceof(Array).and.have.lengthOf(0);
         return done();
@@ -96,7 +91,7 @@ describe('Configuration Tests:', function () {
       // Set node env ro production environment
       process.env.NODE_ENV = 'production';
 
-      User.find({ username: adminFromSeedConfig.username }, function(err, users) {
+      User.find({ email: adminFromSeedConfig.email }, function(err, users) {
 
         // There shouldn't be any errors
         should.not.exist(err);
@@ -105,12 +100,12 @@ describe('Configuration Tests:', function () {
         seed
           .start({ logResults: false })
           .then(function() {
-            User.find({ username: adminFromSeedConfig.username }, function(err, users) {
+            User.find({ email: adminFromSeedConfig.email }, function(err, users) {
               should.not.exist(err);
               users.should.be.instanceof(Array).and.have.lengthOf(1);
 
               var _admin = users.pop();
-              _admin.username.should.equal(adminFromSeedConfig.username);
+              _admin.email.should.equal(adminFromSeedConfig.email);
 
               // Restore original NODE_ENV environment variable
               process.env.NODE_ENV = nodeEnv;
@@ -131,7 +126,7 @@ describe('Configuration Tests:', function () {
       // Set node env ro production environment
       process.env.NODE_ENV = 'test';
 
-      User.find({ username: adminFromSeedConfig.username }, function(err, users) {
+      User.find({ email: adminFromSeedConfig.email }, function(err, users) {
 
         // There shouldn't be any errors
         should.not.exist(err);
@@ -140,20 +135,20 @@ describe('Configuration Tests:', function () {
         seed
           .start({ logResults: false })
           .then(function() {
-            User.find({ username: adminFromSeedConfig.username }, function(err, users) {
+            User.find({ email: adminFromSeedConfig.email }, function(err, users) {
               should.not.exist(err);
               users.should.be.instanceof(Array).and.have.lengthOf(1);
 
               var _admin = users.pop();
-              _admin.username.should.equal(adminFromSeedConfig.username);
+              _admin.email.should.equal(adminFromSeedConfig.email);
 
-              User.find({ username: userFromSeedConfig.username }, function(err, users) {
+              User.find({ email: userFromSeedConfig.email }, function(err, users) {
 
                 should.not.exist(err);
                 users.should.be.instanceof(Array).and.have.lengthOf(1);
 
                 var _user = users.pop();
-                _user.username.should.equal(userFromSeedConfig.username);
+                _user.email.should.equal(userFromSeedConfig.email);
 
                 // Restore original NODE_ENV environment variable
                 process.env.NODE_ENV = nodeEnv;
@@ -185,7 +180,7 @@ describe('Configuration Tests:', function () {
           // There shouldn't be any errors
           should.not.exist(err);
 
-          User.find({ username: { $in: [adminFromSeedConfig.username, userFromSeedConfig.username] } }, function (err, users) {
+          User.find({ email: { $in: [adminFromSeedConfig.email, userFromSeedConfig.email] } }, function (err, users) {
 
             // There shouldn't be any errors
             should.not.exist(err);
@@ -194,7 +189,7 @@ describe('Configuration Tests:', function () {
             seed
               .start({ logResults: false })
               .then(function () {
-                User.find({ username: { $in: [adminFromSeedConfig.username, userFromSeedConfig.username] } }, function (err, users) {
+                User.find({ email: { $in: [adminFromSeedConfig.email, userFromSeedConfig.email] } }, function (err, users) {
                   should.not.exist(err);
                   users.should.be.instanceof(Array).and.have.lengthOf(2);
 
@@ -219,7 +214,7 @@ describe('Configuration Tests:', function () {
       // Set node env ro production environment
       process.env.NODE_ENV = 'production';
 
-      User.find({ username: admin1.username }, function(err, users) {
+      User.find({ email: admin1.email }, function(err, users) {
 
         // There shouldn't be any errors
         should.not.exist(err);
@@ -228,12 +223,12 @@ describe('Configuration Tests:', function () {
         seed
           .start({ logResults: false, seedAdmin: admin1 })
           .then(function() {
-            User.find({ username: admin1.username }, function(err, users) {
+            User.find({ email: admin1.email }, function(err, users) {
               should.not.exist(err);
               users.should.be.instanceof(Array).and.have.lengthOf(1);
 
               var _admin = users.pop();
-              _admin.username.should.equal(admin1.username);
+              _admin.email.should.equal(admin1.email);
 
               // Restore original NODE_ENV environment variable
               process.env.NODE_ENV = nodeEnv;
@@ -254,7 +249,7 @@ describe('Configuration Tests:', function () {
       // Set node env ro production environment
       process.env.NODE_ENV = 'test';
 
-      User.find({ username: admin1.username }, function(err, users) {
+      User.find({ email: admin1.email }, function(err, users) {
 
         // There shouldn't be any errors
         should.not.exist(err);
@@ -263,20 +258,20 @@ describe('Configuration Tests:', function () {
         seed
           .start({ logResults: false, seedAdmin: admin1, seedUser: user1 })
           .then(function() {
-            User.find({ username: admin1.username }, function(err, users) {
+            User.find({ email: admin1.email }, function(err, users) {
               should.not.exist(err);
               users.should.be.instanceof(Array).and.have.lengthOf(1);
 
               var _admin = users.pop();
-              _admin.username.should.equal(admin1.username);
+              _admin.email.should.equal(admin1.email);
 
-              User.find({ username: user1.username }, function(err, users) {
+              User.find({ email: user1.email }, function(err, users) {
 
                 should.not.exist(err);
                 users.should.be.instanceof(Array).and.have.lengthOf(1);
 
                 var _user = users.pop();
-                _user.username.should.equal(user1.username);
+                _user.email.should.equal(user1.email);
 
                 // Restore original NODE_ENV environment variable
                 process.env.NODE_ENV = nodeEnv;
@@ -303,7 +298,7 @@ describe('Configuration Tests:', function () {
       _admin.save(function(err, user) {
         // There shouldn't be any errors
         should.not.exist(err);
-        user.username.should.equal(adminFromSeedConfig.username);
+        user.email.should.equal(adminFromSeedConfig.email);
 
         seed
           .start({ logResults: false })
@@ -321,7 +316,7 @@ describe('Configuration Tests:', function () {
           })
           .catch(function (err) {
             should.exist(err);
-            err.message.should.equal('Failed due to local account already exists: ' + adminFromSeedConfig.username);
+            err.message.should.equal('Failed due to local account already exists: ' + adminFromSeedConfig.email);
 
             // Restore original NODE_ENV environment variable
             process.env.NODE_ENV = nodeEnv;
@@ -360,7 +355,7 @@ describe('Configuration Tests:', function () {
         })
         .catch(function (err) {
           should.exist(err);
-          err.message.should.equal('Failed to add local ' + user1.username);
+          err.message.should.equal('Invalid Email');
 
           // Restore original NODE_ENV environment variable
           process.env.NODE_ENV = nodeEnv;

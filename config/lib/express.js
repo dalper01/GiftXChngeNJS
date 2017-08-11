@@ -36,7 +36,7 @@ module.exports.initLocalVariables = function (app) {
   app.locals.cssFiles = config.files.client.css;
   app.locals.livereload = config.livereload;
   app.locals.logo = config.logo;
-  app.locals.favicon = config.favicon;
+//  app.locals.favicon = config.favicon;
 
   // Passing the request url to environment locals
   app.use(function (req, res, next) {
@@ -65,7 +65,7 @@ module.exports.initMiddleware = function (app) {
   }));
 
   // Initialize favicon middleware
-  app.use(favicon(app.locals.favicon));
+//  app.use(favicon(app.locals.favicon));
 
   // Enable logger (morgan)
   app.use(morgan(logger.getFormat(), logger.getOptions()));

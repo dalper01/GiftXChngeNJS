@@ -7,6 +7,20 @@ angular.module('users').controller('AuthenticationController', ['$scope', '$stat
         $scope.credentials = {
             type: 'customer'
         };
+
+
+        function goPreviousStateOrDefault() {
+            var returnPath = 'home',
+            returnParams = { };            
+            
+            if ($state.previous && $state.previous.state && $state.previous.state.name.length > 0) {
+                returnPath = $state.previous.state.name;
+                returnParams = $state.previous.params;
+            }
+
+            $state.go(returnPath, returnParams);
+        }    
+
         console.log($scope.authentication.user);
         // Get an eventual error defined in the URL query string:
         $scope.error = $location.search().err;
@@ -26,11 +40,13 @@ angular.module('users').controller('AuthenticationController', ['$scope', '$stat
             }
             
             $http.post('/api/auth/signup', $scope.credentials).success(function (response) {
+                
                 // If successful we assign the response to the global user model
                 $scope.authentication.user = response;
                 
                 // And redirect to the previous or home page
-                $state.go($state.previous.state.name || 'home', $state.previous.params);
+                //$state.go($state.previous.state.name || 'home', $state.previous.params);
+                goPreviousStateOrDefault();
             }).error(function (response) {
                 $scope.error = response.message;
             });
@@ -49,8 +65,11 @@ angular.module('users').controller('AuthenticationController', ['$scope', '$stat
                 // If successful we assign the response to the global user model
                 $scope.authentication.user = response;
 
+
+
                 // And redirect to the previous or home page
-                $state.go($state.previous.state.name || 'home', $state.previous.params);
+                //$state.go($state.previous.state.name || 'home', $state.previous.params);
+                goPreviousStateOrDefault();
             }).error(function (response) {
                 $scope.error = response.message;
             });

@@ -10,6 +10,7 @@ var mongoose = require('mongoose'),
     generatePassword = require('generate-password'),
     owasp = require('owasp-password-strength-test');
 
+
 owasp.config({
     minLength: 6,
     maxLength: 128
@@ -98,7 +99,8 @@ var UserSchema = new Schema({
     },
     provider: {
         type: String,
-        required: 'Provider is required'
+        required: 'Provider is required',
+        default: 'local'
     },
     providerData: {},
     additionalProvidersData: {},
@@ -138,6 +140,8 @@ var UserSchema = new Schema({
 UserSchema.pre('save', function (next) {
     if (this.password && this.isModified('password')) {
         this.salt = crypto.randomBytes(16).toString('base64');
+        //this.salt = jscryptor.randomBytes(16).toString('base64');
+        
         this.password = this.hashPassword(this.password);
     }
     
@@ -159,12 +163,17 @@ UserSchema.pre('validate', function (next) {
     next();
 });
 
+UserSchema.methods.validateEmail = function (password) {
+    return validator.isEmail(this.email);
+};
+
 /**
  * Create instance method for hashing a password
  */
 UserSchema.methods.hashPassword = function (password) {
     if (this.salt && password) {
-        return crypto.pbkdf2Sync(password, new Buffer(this.salt, 'base64'), 10000, 64).toString('base64');
+        return crypto.pbkdf2Sync(password, 
+            new Buffer(this.salt, 'base64'), 10000, 64, 'sha1').toString('base64');
     } else {
         return password;
     }

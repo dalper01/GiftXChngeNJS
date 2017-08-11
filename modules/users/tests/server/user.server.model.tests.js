@@ -15,12 +15,14 @@ var user1, user2, user3;
 /**
  * Unit tests
  */
+console.log('User Model Unit Tests');
 describe('User Model Unit Tests:', function () {
 
   before(function () {
     user1 = {
-      firstName: 'Full',
-      lastName: 'Name',
+      //firstName: 'Full',
+      //lastName: 'Name',
+      name: 'Full Name',
       displayName: 'Full Name',
       email: 'test@test.com',
       username: 'username',
@@ -30,8 +32,7 @@ describe('User Model Unit Tests:', function () {
     // user2 is a clone of user1
     user2 = user1;
     user3 = {
-      firstName: 'Different',
-      lastName: 'User',
+      name: 'Different User',
       displayName: 'Full Different Name',
       email: 'test3@test.com',
       username: 'different_username',
@@ -75,10 +76,10 @@ describe('User Model Unit Tests:', function () {
       });
     });
 
-    it('should be able to show an error when trying to save without first name', function (done) {
+    it('should be able to show an error when trying to save without name', function (done) {
       var _user1 = new User(user1);
 
-      _user1.firstName = '';
+      _user1.name = '';
       _user1.save(function (err) {
         should.exist(err);
         done();
@@ -263,12 +264,12 @@ describe('User Model Unit Tests:', function () {
       });
     });
 
-    it('should not allow a less than 10 characters long - "P@$$w0rd!"', function (done) {
+    it('should not allow a less than 6 characters long - "P$w0d"', function (done) {
       var _user1 = new User(user1);
-      _user1.password = 'P@$$w0rd!';
+      _user1.password = 'P$w0d';
 
       _user1.validate(function (err) {
-        err.errors.password.message.should.equal('The password must be at least 10 characters long.');
+        err.errors.password.message.should.equal('The password must be at least 6 characters long.');
         done();
       });
     });

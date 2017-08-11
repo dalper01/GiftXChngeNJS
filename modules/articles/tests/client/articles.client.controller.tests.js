@@ -49,6 +49,9 @@
       Authentication = _Authentication_;
       Articles = _Articles_;
 
+      // block problems from view loads during flush
+      $httpBackend.when('GET', /\.html$/).respond('');
+
       // create mock article
       mockArticle = new Articles({
         _id: '525a8422f6d0f87f0e407a33',
@@ -67,19 +70,23 @@
       });
     }));
 
-    it('$scope.find() should create an array with at least one article object fetched from XHR', inject(function (Articles) {
+     it('$scope.find() should create an array with at least one article object fetched from XHR', inject(function (Articles) {
       // Create a sample articles array that includes the new article
       var sampleArticles = [mockArticle];
 
       // Set GET response
       $httpBackend.expectGET('api/articles').respond(sampleArticles);
 
+
       // Run controller functionality
       scope.find();
-      $httpBackend.flush();
+       $httpBackend.flush(); 
 
       // Test scope value
+      console.log('scope.articles');
+      console.log(scope.articles);
       expect(scope.articles).toEqualData(sampleArticles);
+      //expect(1).toEqualData(1);      
     }));
 
     it('$scope.findOne() should create an array with one article object fetched from XHR using a articleId URL parameter', inject(function (Articles) {
@@ -205,6 +212,6 @@
       it('should redirect to articles', function () {
         expect($location.path).toHaveBeenCalledWith('articles');
       });
-    });
+    }); 
   });
 }());

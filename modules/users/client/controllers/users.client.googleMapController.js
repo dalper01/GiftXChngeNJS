@@ -1,8 +1,8 @@
 ﻿'use strict';
 /*globals google */
 
-angular.module('users').controller('googleMapController', ['$scope', '$http', 'Users', 'Authentication',
-    function ($scope, $http, Users, Authentication) {
+angular.module('users').controller('googleMapController', ['$scope', '$http', 'Users', 'Authentication', 'locationMaps',
+    function ($scope, $http, Users, Authentication, locationMaps) {
         
         $scope.user = Authentication.user;
         //$scope.gPlace;
@@ -10,39 +10,30 @@ angular.module('users').controller('googleMapController', ['$scope', '$http', 'U
         $scope.placeConfirmClass = 'map-place-confirm-hidden';
 
         
-        var geoLocationAPIUrl = 'https://freegeoip.net/json/';
-        //var geoLocationAPIUrl = 'https://www.geoplugin.net/json.gp'; // need account
-        //var geoLocationAPIUrl = 'https://ipinfo.io/json'; // need to use API
         var LatLng;
         var locationData;
         var local;
         var service;
         var map;
         var infowindow;
-        var markers = [];
+        //var markers = [];
         
-        $scope.markers = markers;
-        infowindow = new google.maps.InfoWindow();
+        $scope.markers = locationMaps.GetMarkers();
+        //infowindow = new google.maps.InfoWindow();
         
-        $http({
-            url: geoLocationAPIUrl,
-            method: "GET"
-        }).success(function (data, status, headers, config) {
-            console.log(data);
-            locationData = data;
-            local = { coords: { latitude: locationData.latitude, longitude: locationData.longitude } };
-            //local = { coords: { latitude: locationData.geoplugin_latitude, longitude: locationData.geoplugin_longitude } };
-            $scope.local = local;
-            console.log('$scope.local');
-            console.log($scope.local);
-            $scope.createMap(local);
-
-        }).error(function (data, status, headers, config) {
-                //upload failed
+        locationMaps.GetGeoLocationAPI()
+        .then(function(data) {
+            // Local Lat / Long found
+            $scope.local = data;
+            locationMaps.CreateMap($scope.local);
+        }, function(error) {
+            // couldn't get coords
+            // Add logic
         });
 
         
-        $scope.createMap = function (position) {
+        //locationMaps.CreateMap(position);
+/*         $scope.createMap = function (position) {
             var localLat = position.coords.latitude;
             var localLng = position.coords.longitude;
             //console.log('lat: ' + localLat + ', long:' + localLng);
@@ -57,18 +48,18 @@ angular.module('users').controller('googleMapController', ['$scope', '$http', 'U
             });
             
             service = new google.maps.places.PlacesService(map);
-        };
-        
+        }; */
+/*         
         var moveMap = function (location) {
             map.setCenter(location);
             //console.log('set center: ');
             //console.log(location);
-        };
+        }; */
         
         // get current lon / lat and create google map with it
         //navigator.geolocation.getCurrentPosition($scope.createMap);
         //$scope.createMap();
-        function createMarker(place) {
+/*         function createMarker(place) {
 
             var addressArray = place.formatted_address.split(',');
             var placeLoc = place.geometry.location;
@@ -113,37 +104,43 @@ angular.module('users').controller('googleMapController', ['$scope', '$http', 'U
                 infowindow.setContent(place.name);
                 infowindow.open(map, this);
             });
-        }
+        } */
         
-        function clearMarkers() {
+        /* function clearMarkers() {
             for (var i = 0; i < $scope.markers.length; i++) {
                 $scope.markers[i].setMap(null);
             }
             $scope.markers.length = 0;
-        }
+        } */
 
-        $scope.searchCallback = function (results, status) {
+           
+        var searchCallback = function (results, status) {
             console.log('searchCallback');
             if (status === google.maps.places.PlacesServiceStatus.OK) {
-                clearMarkers();
+                locationMaps.ClearMarkers();
                 for (var i = 0; i < results.length; i++) {
                     var place = results[i];
                     //console.log(place);
-                    createMarker(results[i]);
+                    locationMaps.CreateMarker(results[i]);
                 }
-                moveMap($scope.markers[0].position);
+                //moveMap($scope.markers[0].position);
                 $scope.$digest();
             }
-        };
+        };   
         
         $scope.gmapSearch = function (keyWords) {
             console.log('gmapSearch');
-            var request = { query: keyWords, radius: 20, location: LatLng, rankBy: google.maps.places.RankBy.DISTANCE };
+            var request = { 
+                query: keyWords, radius: 20, 
+                //location: LatLng, 
+                rankBy: google.maps.places.RankBy.DISTANCE 
+            };
             console.log('request');
-            console.log(request);
+            /* console.log(request);
             service.textSearch(request, $scope.searchCallback);
-            console.log('textSearch done');
+            console.log('textSearch done'); */
         
+            locationMaps.GmapSearch(request);
         };
 
 
@@ -172,7 +169,7 @@ angular.module('users').controller('googleMapController', ['$scope', '$http', 'U
                     $scope.$digest();
                 }
             }
-            moveMap(place.position);
+            locationMaps.MoveMap(place.position);
             $scope.myPlace.setAnimation(null);
             place.setAnimation(google.maps.Animation.BOUNCE);
             //place.animation = google.maps.Animation.DROP;
@@ -186,6 +183,7 @@ angular.module('users').controller('googleMapController', ['$scope', '$http', 'U
             /*jshint validthis:true */
             $scope.pickPlace(this);
         }
+
 
         $scope.saveLocation = function (myPlace) {
             console.log('saveLocation');
@@ -224,10 +222,16 @@ angular.module('users').controller('googleMapController', ['$scope', '$http', 'U
             });
 
         };
+
+        
+        // set function to call when map marker is clicked
+        locationMaps.SetMarkerClickCallBack(mapMarkerClick);
+        locationMaps.SetSearchCallback(searchCallback);
+
         
     }]);
 
-angular.module('users').directive('googleplace', function () {
+/* angular.module('users').directive('googleplace', function () {
     return {
         require: 'ngModel',
         link: function (scope, element, attrs, model) {
@@ -250,3 +254,4 @@ angular.module('users').directive('googleplace', function () {
         }
     };
 });
+ */

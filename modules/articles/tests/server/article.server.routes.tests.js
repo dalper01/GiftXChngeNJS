@@ -29,17 +29,15 @@ describe('Article CRUD tests', function () {
   beforeEach(function (done) {
     // Create user credentials
     credentials = {
-      username: 'username',
+      email: 'testArticleCRUDtests@test.com',
       password: 'M3@n.jsI$Aw3$0m3'
     };
 
     // Create a new user
     user = new User({
-      firstName: 'Full',
-      lastName: 'Name',
+      name: 'Full Name',
       displayName: 'Full Name',
-      email: 'test@test.com',
-      username: credentials.username,
+      email: credentials.email,
       password: credentials.password,
       provider: 'local'
     });
@@ -62,6 +60,8 @@ describe('Article CRUD tests', function () {
       .end(function (signinErr, signinRes) {
         // Handle signin error
         if (signinErr) {
+          console.log('signinErr');
+          console.log(signinErr);
           return done(signinErr);
         }
 
@@ -75,6 +75,8 @@ describe('Article CRUD tests', function () {
           .end(function (articleSaveErr, articleSaveRes) {
             // Handle article save error
             if (articleSaveErr) {
+              console.log('articleSaveErr');
+              console.log(articleSaveErr);
               return done(articleSaveErr);
             }
 
@@ -83,6 +85,8 @@ describe('Article CRUD tests', function () {
               .end(function (articlesGetErr, articlesGetRes) {
                 // Handle article save error
                 if (articlesGetErr) {
+                  console.log('articlesGetErr');                  
+                  console.log(articlesGetErr);                  
                   return done(articlesGetErr);
                 }
 

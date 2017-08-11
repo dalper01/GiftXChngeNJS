@@ -10,9 +10,7 @@ module.exports = {
         certificate: './config/sslcerts/cert.pem'
     },
     db: {
-//    uri: process.env.MONGOHQ_URL || process.env.MONGOLAB_URI || 'mongodb://' + (process.env.DB_1_PORT_27017_TCP_ADDR || 'localhost') + '/mean-dev',
-        uri: 'mongodb://giftxchnge:password@ds119772.mlab.com:19772/giftexchange',
-        uriProducts: 'mongodb://giftxchnge:password@ds119772.mlab.com:19772/giftexchange',
+    uri: process.env.MONGOHQ_URL || process.env.MONGOLAB_URI || 'mongodb://' + (process.env.DB_1_PORT_27017_TCP_ADDR || 'localhost') + '/mean-dev',
     options: {
       user: '',
       pass: ''
@@ -89,21 +87,21 @@ module.exports = {
     options: {
       logResults: process.env.MONGO_SEED_LOG_RESULTS === 'false' ? false : true,
       seedUser: {
-        username: process.env.MONGO_SEED_USER_USERNAME || 'user',
+        //username: process.env.MONGO_SEED_USER_USERNAME || 'user',
         provider: 'local',
         email: process.env.MONGO_SEED_USER_EMAIL || 'user@localhost.com',
-        firstName: 'User',
-        lastName: 'Local',
-        displayName: 'User Local',
+        name: 'User Local',
+        //lastName: 'Local',
+        //displayName: 'User Local',
         roles: ['user']
       },
       seedAdmin: {
-        username: process.env.MONGO_SEED_ADMIN_USERNAME || 'admin',
+        //username: process.env.MONGO_SEED_ADMIN_USERNAME || 'admin',
         provider: 'local',
         email: process.env.MONGO_SEED_ADMIN_EMAIL || 'admin@localhost.com',
-        firstName: 'Admin',
-        lastName: 'Local',
-        displayName: 'Admin Local',
+        firstName: 'Admin Local',
+        //lastName: 'Local',
+        //displayName: 'Admin Local',
         roles: ['user', 'admin']
       }
     }

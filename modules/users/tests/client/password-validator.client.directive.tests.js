@@ -87,14 +87,14 @@
       expect(scope.requirementsProgress).toEqual('100');
     });
 
-    it('should not allow a less than 10 characters long - "P@$$w0rd!"', function() {
-      scope.passwordMock.password = 'P@$$w0rd!';
+    it('should not allow a less than 6 characters long - "P@0r!"', function() {
+      scope.passwordMock.password = 'P@0r!';
       compileDirective();
       scope.$digest();
 
       expect(scope.form.password.$valid).toBeFalsy();
       expect(scope.form.password.$error.required).toBeFalsy();
-      expect(scope.passwordErrors).toEqual(['The password must be at least 10 characters long.']);
+      expect(scope.passwordErrors).toEqual(['The password must be at least 6 characters long.']);
       expect(scope.requirementsColor).toEqual('primary');
       expect(scope.requirementsProgress).toEqual('80');
     });
@@ -187,7 +187,7 @@
     });
 
     it('should show 80% progress and "primary" color', function() {
-      scope.passwordMock.password = 'Pa$$w0rd';
+      scope.passwordMock.password = 'P$w0d';
       compileDirective();
       scope.$digest();
 

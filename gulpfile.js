@@ -7,6 +7,7 @@ var _ = require('lodash'),
   defaultAssets = require('./config/assets/default'),
   testAssets = require('./config/assets/test'),
   gulp = require('gulp'),
+  karmaServer = require('karma').Server,
   gulpLoadPlugins = require('gulp-load-plugins'),
   runSequence = require('run-sequence'),
   plugins = gulpLoadPlugins({
@@ -181,7 +182,7 @@ gulp.task('mocha', function (done) {
   // Open mongoose connections
   var mongoose = require('./config/lib/mongoose.js');
   var error;
-
+console.log('Connect mongoose');
   // Connect mongoose
   mongoose.connect(function () {
     mongoose.loadModels();
@@ -193,6 +194,36 @@ gulp.task('mocha', function (done) {
       }))
       .on('error', function (err) {
         // If an error occurs, save it
+        console.log('error: ' + err);
+        error = err;
+      })
+      .on('end', function () {
+        // When the tests are done, disconnect mongoose and pass the error state back to gulp
+        mongoose.disconnect(function () {
+          done(error);
+        });
+      });
+  });
+
+});
+
+// Mocha core tests task
+gulp.task('mocha-core', function (done) {
+  // Open mongoose connections
+  var mongoose = require('./config/lib/mongoose.js');
+  var error;
+  // Connect mongoose
+  mongoose.connect(function () {
+    mongoose.loadModels();
+    // Run the tests
+    gulp.src(testAssets.tests.core)
+      .pipe(plugins.mocha({
+        reporter: 'spec',
+        timeout: 10000
+      }))
+      .on('error', function (err) {
+        // If an error occurs, save it
+        console.log('error: ' + err);
         error = err;
       })
       .on('end', function () {
@@ -207,12 +238,18 @@ gulp.task('mocha', function (done) {
 
 // Karma test runner task
 gulp.task('karma', function (done) {
-  return gulp.src([])
+  /*return gulp.src([])
     .pipe(plugins.karma({
       configFile: 'karma.conf.js',
       action: 'run',
       singleRun: true
-    }));
+    })); */
+    new karmaServer({
+
+      configFile: __dirname + '/karma.conf.js',
+      singleRun: true,
+    }, done).start();
+
 });
 
 // Drops the MongoDB database, used in e2e testing
@@ -269,7 +306,11 @@ gulp.task('build', function (done) {
 
 // Run the project tests
 gulp.task('test', function (done) {
-  runSequence('env:test', 'lint', 'mocha', 'karma', 'nodemon', 'protractor', done);
+  runSequence('env:test', 
+  //'lint', 'mocha', 'mocha-core',
+  'karma', 
+  //'nodemon', 'protractor', 
+  done);
 });
 
 gulp.task('test:server', function (done) {

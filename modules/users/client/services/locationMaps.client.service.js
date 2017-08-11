@@ -1,6 +1,6 @@
 'use strict';
+/*global google*/
 
-// Authentication service for user variables
 angular.module('users').factory('locationMaps', ['$http', '$q',
   function ($http, $q) {
     var googlePlacesService = null;
@@ -15,7 +15,7 @@ angular.module('users').factory('locationMaps', ['$http', '$q',
     var getMarkers = function() {
         return markers;
 
-    }
+    };
 
     var getGeoLocationAPI = function() {
         
@@ -67,7 +67,7 @@ angular.module('users').factory('locationMaps', ['$http', '$q',
             requestOptions.location = userLatLng;
             googlePlacesService.textSearch(requestOptions, searchCallback);
 
-        }
+        };
 
         /* var searchCallback = function (results, status) {
             console.log('searchCallback');
@@ -88,7 +88,7 @@ angular.module('users').factory('locationMaps', ['$http', '$q',
                 markers[i].setMap(null);
             }
             markers.length = 0;
-        }
+        };
 
         var createMarker = function(place) {
 
@@ -136,16 +136,16 @@ angular.module('users').factory('locationMaps', ['$http', '$q',
                 infowindow.setContent(place.name);
                 infowindow.open(map, this);
             });
-        }
+        };
 
         // Controller function to call when map marker is clicked
         var setMarkerClickCallBack = function (callback) {
             markerClickCallBack = callback;
-        }
+        };
         
         var setSearchCallback = function (callback) {
             searchCallback = callback;
-        }
+        };
         
     return {
         SetMarkerClickCallBack: setMarkerClickCallBack,

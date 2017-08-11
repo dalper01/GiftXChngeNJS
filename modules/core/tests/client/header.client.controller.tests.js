@@ -21,6 +21,7 @@
       });
     }));
 
+    console.log('should expose the authentication service');
     it('should expose the authentication service', function () {
       expect(scope.authentication).toBe(Authentication);
     });

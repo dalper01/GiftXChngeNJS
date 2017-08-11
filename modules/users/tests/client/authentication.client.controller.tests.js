@@ -41,6 +41,8 @@
         $httpBackend = _$httpBackend_;
         $location = _$location_;
 
+      // block problems from view loads during flush
+      $httpBackend.when('GET', /\.html$/).respond('');        
         // Initialize the Authentication controller
         AuthenticationController = $controller('AuthenticationController', {
           $scope: scope

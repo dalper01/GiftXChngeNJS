@@ -7,7 +7,8 @@ var _ = require('lodash'),
   defaultAssets = require('./config/assets/default'),
   testAssets = require('./config/assets/test'),
   testConfig = require('./config/env/test'),
-  karmaReporters = ['progress'];
+  kjhtml = require('karma-jasmine-html-reporter'),
+  karmaReporters = ['kjhtml'];
 
 if (testConfig.coverage) {
   karmaReporters.push('coverage');
@@ -18,7 +19,9 @@ module.exports = function (karmaConfig) {
   karmaConfig.set({
     // Frameworks to use
     frameworks: ['jasmine'],
+    //client.captureConsole
 
+    //logLevel: config.LOG_INFO,
     preprocessors: {
       'modules/*/client/views/**/*.html': ['ng-html2js'],
       'modules/core/client/app/config.js': ['coverage'],
@@ -43,7 +46,7 @@ module.exports = function (karmaConfig) {
 
     // Test results reporter to use
     // Possible values: 'dots', 'progress', 'junit', 'growl', 'coverage'
-    reporters: karmaReporters,
+    reporters: ['progress', 'coverage'],
 
     // Configure the coverage reporter
     coverageReporter: {
@@ -73,6 +76,7 @@ module.exports = function (karmaConfig) {
     // Enable / disable watching file and executing tests whenever any file changes
     autoWatch: true,
 
+
     // Start these browsers, currently available:
     // - Chrome
     // - ChromeCanary
@@ -81,7 +85,7 @@ module.exports = function (karmaConfig) {
     // - Safari (only Mac)
     // - PhantomJS
     // - IE (only Windows)
-    browsers: ['PhantomJS'],
+    browsers: ['Chrome'],
 
     // If browser does not capture in given timeout [ms], kill it
     captureTimeout: 60000,
