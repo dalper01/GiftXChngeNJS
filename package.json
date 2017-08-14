@@ -25,8 +25,6 @@
     "body-parser": "^1.13.1",
     "bower": "^1.4.1",
     "bufferutil": "3.0.2", 
-    //"": "", // downgraded to fix karma dependency during Travis CI Tests
-    //"bufferutil": "3.0.0",
     "cfenv": "~1.0.0",
     "chalk": "^1.1.0",
     "compression": "^1.5.0",
