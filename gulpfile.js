@@ -239,7 +239,6 @@ gulp.task('mocha-core', function (done) {
 // Karma test runner task
 gulp.task('karma', function (done) {
     new karmaServer({
-
       configFile: __dirname + '/karma.conf.js',
       singleRun: true,
     }, done).start();
