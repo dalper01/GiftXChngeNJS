@@ -126,5 +126,9 @@
     "should": "^7.0.1",
     "supertest": "^1.0.1",
     "ws": "3.0.0"
+  },
+    "optionalDependencies": {
+    "bufferutil": "^1.0.0",
+    "utf-8-validate": "^2.0.0"
   }
 }
