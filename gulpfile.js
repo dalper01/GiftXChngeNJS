@@ -238,12 +238,6 @@ gulp.task('mocha-core', function (done) {
 
 // Karma test runner task
 gulp.task('karma', function (done) {
-  /*return gulp.src([])
-    .pipe(plugins.karma({
-      configFile: 'karma.conf.js',
-      action: 'run',
-      singleRun: true
-    })); */
     new karmaServer({
 
       configFile: __dirname + '/karma.conf.js',
@@ -307,7 +301,7 @@ gulp.task('build', function (done) {
 // Run the project tests
 gulp.task('test', function (done) {
   runSequence('env:test', 
-  //'lint', 'mocha', 'mocha-core',
+  'lint', 'mocha', 'mocha-core',
   'karma', 
   //'nodemon', 'protractor', 
   done);
