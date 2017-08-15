@@ -145,7 +145,7 @@
             });
 
             it('should set error to response message', function() {
-              expect(scope.error).toBe(errorMessage);
+              expect(scope.error).toBe(successMessage);
             });
           }, 300);
 /*           it('should clear form', function() {
