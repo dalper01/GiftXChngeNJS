@@ -148,13 +148,6 @@
               expect(scope.error).toBe(successMessage);
             });
           }, 300);
-/*           it('should clear form', function() {
-            expect(scope.credentials).toBe(null);
-          });
-
-          it('should set success to response message', function() {
-            expect(scope.success).toBe(successMessage);
-          }); */
         });
       });
 
