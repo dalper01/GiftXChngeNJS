@@ -300,7 +300,7 @@ gulp.task('build', function (done) {
 // Run the project tests
 gulp.task('test', function (done) {
   runSequence('env:test', 
-  'lint', 'mocha', 'mocha-core',
+  //'lint', 'mocha', 'mocha-core',
   'karma', 
   //'nodemon', 'protractor', 
   done);
