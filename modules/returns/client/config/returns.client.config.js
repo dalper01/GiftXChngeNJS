@@ -3,18 +3,20 @@
  //Configuring the Returns module
 angular.module('articles').run(['Menus',
 function (Menus) {
-  // Add the articles dropdown item
+
+  // Add the returns dropdown item
   Menus.addMenuItem('topbar', {
     title: 'Returns',
     state: 'returns',
     type: 'dropdown',
-    roles: ['user']
+    roles: ['user', 'vendor']
   });
 
-  // Add the dropdown list item
+  // Add the myreturns list item
   Menus.addSubMenuItem('topbar', 'returns', {
-    title: 'My Returns',
-    state: 'myreturns'
+    title: 'Returns',
+    state: 'returns',
+    roles: ['user']
   });
 
   // Add the dropdown create item

@@ -15,9 +15,6 @@ module.exports = function (app) {
 
     app.route('/api/returns/user/:userId')//.all(articlesPolicy.isAllowed)
     .get(returns.listForUser)
-    //.get(function () { 
-    //    return { }
-    //})
     .post(returns.create);
 
     app.route('/api/validupc/:upc')

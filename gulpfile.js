@@ -182,7 +182,7 @@ gulp.task('mocha', function (done) {
   // Open mongoose connections
   var mongoose = require('./config/lib/mongoose.js');
   var error;
-console.log('Connect mongoose');
+
   // Connect mongoose
   mongoose.connect(function () {
     mongoose.loadModels();
@@ -228,6 +228,7 @@ gulp.task('mocha-core', function (done) {
       })
       .on('end', function () {
         // When the tests are done, disconnect mongoose and pass the error state back to gulp
+
         mongoose.disconnect(function () {
           done(error);
         });
@@ -297,10 +298,22 @@ gulp.task('build', function (done) {
   runSequence('env:dev', 'lint', ['uglify', 'cssmin'], done);
 });
 
+gulp.task('wait300', function (done) {
+  /* console.log('waiting.........................');
+  setTimeout(function(){
+  console.log('done waiting.........................');
+  done();
+  }, 6000); */
+console.log('Environment: ' + process.env.NODE_ENV);
+done();
+});
 // Run the project tests
 gulp.task('test', function (done) {
   runSequence('env:test', 
-  //'lint', 'mocha', 'mocha-core',
+  'lint', 
+  'mocha',
+  'mocha-core',
+  //'wait300',
   'karma', 
   //'nodemon', 'protractor', 
   done);

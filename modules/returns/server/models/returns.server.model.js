@@ -6,7 +6,7 @@
 var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
-var ItemModel = require('./returns.server.model.items.js');
+var ItemModel = require('./products.server.model.js');
 
 /**
  * Return Schema

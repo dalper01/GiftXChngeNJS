@@ -3,8 +3,9 @@
 angular.module('returns').controller('NewReturnsController', ['$http', '$scope', '$state', '$stateParams', '$location', 'Authentication', 'customerReturnService', 'searchProductService',
     function ($http, $scope, $state, $stateParams, $location, Authentication, customerReturnService, searchProductService) {
         $scope.user = Authentication.user;
-        //console.log($scope.user);
-        //console.log($scope.user.displayName);
+        console.log('$scope.user');
+        console.log($scope.user);
+        console.log($scope.user.displayName);
         // bind return service to be used from markup
         //$scope.newCustomerReturnservice = customerReturnService;
 
@@ -100,7 +101,7 @@ angular.module('returns').controller('NewReturnsController', ['$http', '$scope',
             console.log($scope.newCustomerReturn);
             
             // if user not logged in, prompt for login
-            if ($scope.user.displayName === null || $scope.user.displayName === undefined) {
+            if ($scope.user.name === email || $scope.user.email === undefined) {
                 alert('Login / Register to complete return');
                 return;
             }

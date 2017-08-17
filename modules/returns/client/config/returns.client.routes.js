@@ -39,8 +39,8 @@ angular.module('returns').config(['$stateProvider',
                 roles: ['user']
             }
         })
-        .state('myreturns', {
-            url: '/myreturns',
+        .state('returns', {
+            url: '/returns',
             params: {
                 confirmReturn: null
             },            
