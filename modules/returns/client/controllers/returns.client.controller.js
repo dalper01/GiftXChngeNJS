@@ -104,7 +104,7 @@ angular.module('returns').controller('NewReturnsController', ['$http', '$scope',
             if ($scope.user.email === null || $scope.user.email === undefined) {
                 alert('Login / Register to complete return');
                 return;
-            }
+            } 
             $http({
                 url: '/api/returns',
                 method: "POST",
