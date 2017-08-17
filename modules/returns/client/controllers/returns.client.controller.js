@@ -101,10 +101,10 @@ angular.module('returns').controller('NewReturnsController', ['$http', '$scope',
             console.log($scope.newCustomerReturn);
             
             // if user not logged in, prompt for login
-            if ($scope.user.email === null || $scope.user.email === undefined) {
+            if ($scope.user.name === null || $scope.user.name === undefined) {
                 alert('Login / Register to complete return');
                 return;
-            } 
+            }
             $http({
                 url: '/api/returns',
                 method: "POST",
