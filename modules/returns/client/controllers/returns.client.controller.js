@@ -92,7 +92,6 @@ angular.module('returns').controller('NewReturnsController', ['$http', '$scope',
                 console.log(status);
             });
 
-
         };
         
         
