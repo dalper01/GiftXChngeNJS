@@ -1,0 +1,70 @@
+<div style="margin-top: 40px;"></div>
+<div class="row">
+    <div class="col-sm-12" sstyle="max-height: 800px; min-height: 400px; overflow-y: auto">
+
+        <div style="margin-bottom: 30px;">
+            <h1 style="font-weight: 400; font-size: 28px; color: #555">Returns</h1>
+        </div>
+    </div>
+
+</div>
+
+<div class="row"  ng-repeat="returnRequest in returnsRequests track by $index">
+        <div class="col-sm-1 text-center" style="height: 100%; padding-top: 25px;">
+            <!-- <a class="btn btn-primary text-center" style="padding: 2px" ng-click="returnRequest.offer=true">Make Offer</a> -->
+        </div>
+        
+
+    <div class="panel panel-default col-sm-7 col-sm-offset-0">
+        <div class="panel-heading row" style="font-size: 11px; font: Arial,sans-serif; background-color: #f6f6f6; background-image: none;color: #555">
+            <div class="col-sm-3">ORDER PLACED <br /> {{ dateFormat(returnRequest.created) }}</div>
+            <div class="col-sm-2">TOTAL <br /> {{returnRequest.returnItems.length}}</div>
+            <div class="col-sm-3">ORDER BY <br /> {{returnRequest.user.displayName}}</div>
+            <div class="col-sm-3 pull-right">ORDER # <br /> {{returnRequest["_id"]}}</div>
+        </div>
+        <div class="panel-body" notstyle="min-height: 500px;">
+            <div class="col-sm-12" ng-repeat="item in returnRequest.returnItems" style="margin-bottom: 20px"> 
+                <div class="col-sm-3">
+                        <img style="max-width:70px; max-height: 70px;" src="{{item.images[0]}}" />
+                </div>
+                <div class="col-sm-3">
+                        {{item.upc}} <br>
+                        {{item.brand}} <br>
+                </div>
+
+                <!-- Title -->
+                <div class="col-sm-6" ng-if="!returnRequest.offer">
+                        {{item.title}} <br>
+                </div>
+
+                <!-- Offer Inputs -->
+                <div class="col-sm-6" ng-if="returnRequest.offer">
+                    <div class="col-sm-1">
+                        <input type="checkbox" ng-model="item.offerIncluded">
+                    </div>
+<!--                     <div class="input-group"> 
+                        <span class="input-group-addon">$</span>
+                        <input type="number" value="1000" min="0" step="0.01" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" 
+                            ng-model="item.offerAmount" ng-disabled="!item.offerIncluded" />
+                    </div>  -->
+                    <div class="left-inner-addon col-sm-6">
+                        <span style="font-weight: bolder;">$</span>
+                        <input type="number" class="form-control currency" ng-model="item.offerAmount" not-deci-format ng-disabled="!item.offerIncluded" />
+                    </div>
+<!--                     <div class="currency-div ">
+                            <span>$</span>
+                            <span class="currency-span" ng-model="item.offerAmount" contenteditable="true">sdfsd</span>
+                            {{item.offerAmount}}
+                    </div>                 -->
+                </div>
+            </div>
+
+            <!-- Make Offer Button -->
+            <div class="col-sm-12 text-center" style="height: 100%; padding-top: 25px;">
+                    <a class="btn btn-primary" ng-if="!returnRequest.offer" style="width: 30%" ng-click="returnRequest.offer=true">Make Offer</a>
+                    <a class="btn btn-success" ng-if="returnRequest.offer" style="width: 30%" ng-click="createOffer(returnRequest)">Submit Offer</a>
+            </div>
+        </div>
+    </div>
+</div>
+

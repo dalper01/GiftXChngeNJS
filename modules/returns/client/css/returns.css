@@ -1,0 +1,88 @@
+
+/* custom scroll bar begin */
+.scrollbar
+{
+	margin-left: 30px;
+	float: left;
+	height: 300px;
+	width: 65px;
+	background: #F5F5F5;
+	overflow-y: scroll;
+	margin-bottom: 25px;
+}
+
+.force-overflow
+{
+	min-height: 450px;
+}
+/* #right-panel ul::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	background-color: #F5F5F5;
+}
+
+#right-panel ul::-webkit-scrollbar
+{
+	width: 10px;
+	background-color: #F5F5F5;
+}
+
+#right-panel ul::-webkit-scrollbar-thumb
+{
+	background-color: #000000;
+	border: 2px solid #555555;
+} */
+/* custome scroll bar end */
+
+.return-image-border {
+	max-width: 145px; 
+	height: 150px; 
+	display: inline;
+	vertical-align: middle; 
+	border: 1px #555; 
+	margin: 2px 2px 2px 2px;
+}
+
+
+.return-image {
+    display: inline!important;
+    max-height: 130px;  
+    border: 1px #222
+}
+
+
+.left-inner-addon {
+    position: relative;
+}
+.left-inner-addon input {
+    padding-left: 22px;    
+}
+.left-inner-addon span {
+    position: absolute;
+    padding: 7px 12px;
+    pointer-events: none;
+}
+
+.right-inner-addon {
+    position: relative;
+}
+.right-inner-addon input {
+    padding-right: 30px;    
+}
+.right-inner-addon span {
+    position: absolute;
+    right: 0px;
+    padding: 7px 12px;
+    pointer-events: none;
+}
+
+.currency-span 
+{
+    border: solid 1px black;
+	min-width: 50px;
+}
+.currency-div
+{
+	max-width: 200px;
+	min-width: 50px;
+}
