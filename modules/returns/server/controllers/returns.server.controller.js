@@ -17,6 +17,8 @@ var path = require('path'),
 exports.create = function (req, res) {
     var custReturn = new Return(req.body);
     custReturn.user = req.user;
+    console.log ('req.returnRequest');
+    console.log (req.returnRequest);
 
     custReturn.save(function (err) {
         if (err) {
@@ -27,6 +29,30 @@ exports.create = function (req, res) {
             res.json(custReturn);
         }
     });
+};
+
+/**
+ * Create an Offer
+ */
+exports.createOffer = function (req, res) {
+    var custReturn = new Return(req.body);
+    custReturn.user = req.user;
+
+/*     custReturn.save(function (err) {
+        if (err) {
+            return res.status(400).send({
+                message: errorHandler.getErrorMessage(err)
+            });
+        } else {
+            res.json(custReturn);
+        }
+    }); */
+
+
+    console.log('custReturn');
+    console.log(custReturn);
+    res.json(true);
+
 };
 
 /**
@@ -121,12 +147,19 @@ exports.list = function (req, res) {
     /* jshint ignore:start*/
     userId = req.user["_id"];
     /* jshint ignore:end */
+    var userType = req.user.type;
 
     console.log("req.user._id");
     console.log(userId);
     //var query = {}
+    var searchFilter = { user: userId };
+    if (userType!=='customer') {
+        searchFilter = {};
+        console.log('customer request');
+    }
 
-    Return.find({ user: userId }).sort('-created').populate('user', 'displayName').exec(function (err, returns) {
+
+    Return.find(searchFilter).sort('-created').populate('user', 'displayName').exec(function (err, returns) {
         if (err) {
             return res.status(400).send({
                 message: errorHandler.getErrorMessage(err)

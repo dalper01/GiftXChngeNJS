@@ -17,14 +17,14 @@ var ReturnSchema = new Schema({
     default: Date.now
     },
     returnItems: [ItemModel], 
-    //returnItems: [{
-    //        type: Schema.ObjectId,
-    //        ref: 'Item'
-    //    }],
   user: {
     type: Schema.ObjectId,
     ref: 'User'
-  }
+  },
+  offers: [{
+    type: Schema.ObjectId,
+    ref: 'User'
+  }]
 });
 
 mongoose.model('Return', ReturnSchema);

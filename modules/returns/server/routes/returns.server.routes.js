@@ -21,7 +21,9 @@ module.exports = function (app) {
     .get(returns.validateUPC);
     app.route('/api/keywordsearch/:keyword')
     .get(returns.itemKeywordSearch);
-    //app.route('/api/bditemsearch/:keyword')
+
+    app.route('/api/createoffer/:returnid').
+    post(returns.createOffer);
     //.get(returns.dbitemSearch);
 
     

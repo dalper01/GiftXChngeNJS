@@ -39,16 +39,27 @@ angular.module('returns').config(['$stateProvider',
                 roles: ['user']
             }
         })
-        .state('returns', {
-            url: '/returns',
+        .state('vendor-returns', {
+            url: '/vendor-returns',
             params: {
                 confirmReturn: null
             },            
-            templateUrl: 'modules/returns/client/views/returns.client.myReturnsView.html',
+            templateUrl: 'modules/returns/client/views/vendor-returns.client.view.html',
+            controller: 'VendorReturnsController',
+            data: {
+                roles: ['vendor']
+            }
+        })
+        .state('myReturns', {
+            url: '/myReturns',
+            params: {
+                confirmReturn: null
+            },            
+            templateUrl: 'modules/returns/client/views/myReturns.client.view.html',
             controller: 'MyReturnsController',
             data: {
                 roles: ['user']
             }
-        });
+        });        
     }
 ]);
