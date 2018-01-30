@@ -314,7 +314,7 @@ gulp.task('test', function (done) {
   'mocha',
   'mocha-core',
   //'wait300',
-  'karma', 
+  //'karma', 
   //'nodemon', 'protractor', 
   done);
 });
